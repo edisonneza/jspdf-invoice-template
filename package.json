@@ -1,0 +1,35 @@
+{
+  "name": "jspdf-template",
+  "version": "1.0.0",
+  "description": "PDF template created for invoice with optional parameters. Using jsPDF library.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edisonneza/jspdf-template.git"
+  },
+  "keywords": [
+    "jspdf-template",
+    "jspdf",
+    "invoice"
+  ],
+  "author": "Edison Neza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edisonneza/jspdf-template/issues"
+  },
+  "homepage": "https://github.com/edisonneza/jspdf-template#readme",
+  "dependencies": {
+    "jspdf": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0"
+  }
+}

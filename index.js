@@ -1,4 +1,4 @@
-import PDFTemplate from './src/index';
+import jsPDFTemplate from './src/index';
 
 
-PDFTemplate('test');
+export default jsPDFTemplate;

@@ -6,6 +6,8 @@ Creating PDF from scratch is a nightmare (at least for me). In some project we n
 All this code works by using an object as parameter for the function. Here some properties are optional and you can add them as empty string if you want to display nothing. Also it can be used in different languages because all labels (and all text) can be set in the props object.
 
 <h4><b><i>Feel free for any suggestion or improvements.</i></b></h4>
+
+## [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/)
 <br/>
 This small "library" can be imported in any project via `npm` or in browser via CDN by using `jsPDFInvoiceTemplate` variable. 
 

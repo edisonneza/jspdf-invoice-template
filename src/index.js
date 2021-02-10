@@ -1,11 +1,16 @@
 import { jsPDF } from "jspdf";
 
-export const OutputType = {
+const OutputType = {
   Save: "save", //save pdf as a file
   DataUriString: "datauristring", //returns the data uri string
   DataUri: "datauri", //opens the data uri in current window
   DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
 };
+
+export {
+  OutputType,
+  jsPDF
+}
 
 /**
  *
@@ -54,7 +59,7 @@ export const OutputType = {
  *   pageEnable: boolean,
  *   pageLabel?: string, } } props
  */
-function jsPDFTemplate(props) {
+function jsPDFInvoiceTemplate(props) {
   if (!props.business || !props.contact || !props.invoice)
     throw Error(
       "Props must contain 'business', 'contact' and 'invoice' objects."
@@ -295,7 +300,6 @@ function jsPDFTemplate(props) {
       (param.orientationLandscape && currentHeight > 178) ||
       (currentHeight > 168 && doc.getNumberOfPages() > 1)
     ) {
-      console.log(currentHeight);
       doc.addPage();
       currentHeight = 10;
       if (index + 1 < tableBodyLength) addTableHeader();
@@ -348,7 +352,7 @@ function jsPDFTemplate(props) {
 
   //   if (currentHeight > 250 && doc.getNumberOfPages() > 1) {
   if (doc.getNumberOfPages() > 1) {
-    for (i = 1; i <= doc.getNumberOfPages(); i++) {
+    for (let i = 1; i <= doc.getNumberOfPages(); i++) {
       doc.setFontSize(pdfConfig.fieldTextSize - 2);
       doc.setTextColor(colorGray);
 
@@ -405,7 +409,7 @@ function jsPDFTemplate(props) {
   }
 
   if (param.outputType === "save") doc.save(param.fileName);
-  else doc.output(param.outputType);
+  else doc.output(param.outputType, { filename: param.fileName });
 
   return {
     pageNumber: doc.getNumberOfPages(),
@@ -413,4 +417,4 @@ function jsPDFTemplate(props) {
   };
 }
 
-export default jsPDFTemplate;
+export default jsPDFInvoiceTemplate;

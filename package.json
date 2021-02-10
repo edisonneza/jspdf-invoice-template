@@ -1,5 +1,5 @@
 {
-  "name": "jspdf-template",
+  "name": "jspdf-invoice-template",
   "version": "1.0.0",
   "description": "PDF template created for invoice with optional parameters. Using jsPDF library.",
   "main": "index.js",
@@ -10,19 +10,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edisonneza/jspdf-template.git"
+    "url": "git+https://github.com/edisonneza/jspdf-invoice-template.git"
   },
   "keywords": [
     "jspdf-template",
     "jspdf",
-    "invoice"
+    "invoice",
+    "pdf"
   ],
-  "author": "Edison Neza",
+  "author": "Edison Neza <edisonneza.dev@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/edisonneza/jspdf-template/issues"
+    "url": "https://github.com/edisonneza/jspdf-invoice-template/issues"
   },
-  "homepage": "https://github.com/edisonneza/jspdf-template#readme",
+  "homepage": "https://github.com/edisonneza/jspdf-invoice-template#readme",
   "dependencies": {
     "jspdf": "^2.3.0"
   },

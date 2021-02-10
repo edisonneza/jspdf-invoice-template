@@ -1,4 +1,8 @@
-import jsPDFTemplate from './src/index';
+import jsPDFInvoiceTemplate, { jsPDF, OutputType } from './src/index';
 
 
-export default jsPDFTemplate;
+export default jsPDFInvoiceTemplate;
+export {
+    OutputType,
+    jsPDF
+}

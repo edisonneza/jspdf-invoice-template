@@ -57,12 +57,13 @@ export const OutputType = {
 function jsPDFTemplate(props) {
   if (!props.business || !props.contact || !props.invoice)
     throw Error(
-      "Props object must contain 'business', 'contact' and 'invoice' properties."
+      "Props must contain 'business', 'contact' and 'invoice' objects."
     );
 
   const param = {
     outputType: props.outputType || "save",
     fileName: props.fileName || "",
+    orientationLandscape: props.orientationLandscape || false,
     logo: {
       src: (props.logo && props.logo.src) || "",
       width: (props.logo && props.logo.width) || "",
@@ -117,10 +118,14 @@ function jsPDFTemplate(props) {
     if (
       Object.keys(param.invoice.table[0]).length != param.invoice.header.length
     )
-      throw Error("Length of header and table column must be equal");
+      throw Error("Length of header and table column must be equal.");
   }
 
-  var doc = new jsPDF();
+  const options = {
+    orientation: param.orientationLandscape ? "landscape" : "",
+  };
+
+  var doc = new jsPDF(options);
 
   var docWidth = doc.internal.pageSize.width;
   var docHeight = doc.internal.pageSize.height;
@@ -287,7 +292,17 @@ function jsPDFTemplate(props) {
     currentHeight += 5;
 
     if (
-      currentHeight > 265 ||
+      (param.orientationLandscape && currentHeight > 178) ||
+      (currentHeight > 168 && doc.getNumberOfPages() > 1)
+    ) {
+      console.log(currentHeight);
+      doc.addPage();
+      currentHeight = 10;
+      if (index + 1 < tableBodyLength) addTableHeader();
+    }
+
+    if (
+      (!param.orientationLandscape && currentHeight > 265) ||
       (currentHeight > 255 && doc.getNumberOfPages() > 1)
     ) {
       doc.addPage();
@@ -303,7 +318,12 @@ function jsPDFTemplate(props) {
     .height;
   //END TABLE PART
 
-  if (currentHeight + invDescSize > 260) {
+  if (param.orientationLandscape && currentHeight + invDescSize > 173) {
+    doc.addPage();
+    currentHeight = 10;
+  }
+
+  if (!param.orientationLandscape && currentHeight + invDescSize > 260) {
     doc.addPage();
     currentHeight = 10;
   }
@@ -340,7 +360,12 @@ function jsPDFTemplate(props) {
         doc.internal.pageSize.height - 6
       );
 
-      if (currentHeight + invDescSize > 270) {
+      if (param.orientationLandscape && currentHeight + invDescSize > 183) {
+        doc.addPage();
+        currentHeight = 10;
+      }
+
+      if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
         doc.addPage();
         currentHeight = 10;
       }

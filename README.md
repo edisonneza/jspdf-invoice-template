@@ -89,8 +89,8 @@ var props = {
         header: ["#", "Description", "Price", "Quantity", "Unit", "Total"],
         headerBorder: false,
         tableBodyBorder: false,
-        table: Array.from(Array(10), (x,index)=>({
-            num: index,
+        table: Array.from(Array(10), (item, index)=>({
+            num: index + 1,
             desc: "There are many variations ",
             price: 200.5,
             quantity: 4.5,

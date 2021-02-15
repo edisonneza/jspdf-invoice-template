@@ -1,6 +1,6 @@
 {
   "name": "jspdf-invoice-template",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "PDF template created for invoice with optional parameters. Using jsPDF library.",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "babel-loader": "^8.2.2",
+    "typescript": "^4.1.5",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0"
   }

@@ -19,7 +19,7 @@
                 <div class="alert alert-danger d-none" role="alert">
                     <b>Syntax Error.</b> Please double check the object, because the format is incorrect!
                 </div>
-                <div id="editor">
+                <textarea class="form-control" rows="20" id="editor">
                 {
                     outputType: 'dataurlnewwindow', //save, datauristring, datauri, dataurlnewwindow
                     fileName: "Invoice 2021",
@@ -81,20 +81,20 @@
 
                 <br/>
                 <div class="text-center">
-                    <h4><a href="https://github.com/edisonneza/jspdf-invoice-template#usage">How to use?</a></h4>
+                    <h4><a href="https://github.com/edisonneza/jspdf-invoice-template#usage">How to import in my project?</a></h4>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/ace.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.01/ace.js" type="text/javascript" charset="utf-8"></script> -->
     <script src="https://unpkg.com/jspdf-invoice-template@latest/dist/index.js" type="text/javascript"></script>
     <script>
-        window.onload = function () {
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.getSession().setMode("ace/mode/javascript");
-        };
+        // window.onload = function () {
+        //     var editor = ace.edit("editor");
+        //     editor.setTheme("ace/theme/monokai");
+        //     editor.getSession().setMode("ace/mode/javascript");
+        // };
 
 
         function GeneratePDF() {

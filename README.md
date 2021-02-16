@@ -7,7 +7,7 @@ All this code works by using an object as parameter for the function. Here some 
 
 <h4><b><i>Feel free for any suggestion or improvements.</i></b></h4>
 
-## [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/)
+## [Demo site](https://edisonneza.github.io/jspdf-invoice-template) | [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/)
 <br/>
 This small "library" can be imported in any project via `npm` or in browser via CDN by using `jsPDFInvoiceTemplate` variable. 
 

@@ -15,7 +15,11 @@ import { jsPDF } from "jspdf";
  *  logo: {
  *      src: string,
  *      width: number,
- *       height: number
+ *      height: number,
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
+ *      }
  *   },
  *   business: {
  *       name: string,
@@ -37,16 +41,32 @@ import { jsPDF } from "jspdf";
  *       label: string,
  *       invTotalLabel: string,
  *       num: number,
- *      invDate: string,
+ *       invDate: string,
  *       invGenDate: string,
  *       headerBorder: boolean,
  *       tableBodyBorder: boolean,
- *       header: [],
- *       table: [],
+ *       header: string[],
+ *       table: any,
  *       invTotal: string,
  *       invCurrency: string,
  *       invDescLabel: string,
  *       invDesc: string,
+ *       row1?: {
+ *           col1?: string,
+ *           col2?: string,
+ *           col3?: string,
+ *           style?: {
+ *               fontSize?: number
+ *           }
+ *       },
+ *       row2?: {
+ *           col1?: string,
+ *           col2?: string,
+ *           col3?: string,
+ *           style?: {
+ *               fontSize?: number
+ *           }
+ *       },
  *   },
  *   footer?: {
  *       text: string,
@@ -67,6 +87,10 @@ declare function jsPDFInvoiceTemplate(props: {
         src: string;
         width: number;
         height: number;
+        margin: {
+            top: number;
+            left: number;
+        };
     };
     business: {
         name: string;
@@ -92,12 +116,28 @@ declare function jsPDFInvoiceTemplate(props: {
         invGenDate: string;
         headerBorder: boolean;
         tableBodyBorder: boolean;
-        header: [];
-        table: [];
+        header: string[];
+        table: any;
         invTotal: string;
         invCurrency: string;
         invDescLabel: string;
         invDesc: string;
+        row1?: {
+            col1?: string;
+            col2?: string;
+            col3?: string;
+            style?: {
+                fontSize?: number;
+            };
+        };
+        row2?: {
+            col1?: string;
+            col2?: string;
+            col3?: string;
+            style?: {
+                fontSize?: number;
+            };
+        };
     };
     footer?: {
         text: string;

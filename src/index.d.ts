@@ -16,9 +16,9 @@ import { jsPDF } from "jspdf";
  *      src: string,
  *      width: number,
  *      height: number,
- *      margin: {
- *        top: number,
- *        left: number
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
  *      }
  *   },
  *   business: {

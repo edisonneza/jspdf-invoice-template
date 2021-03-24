@@ -16,7 +16,10 @@
     "jspdf-template",
     "jspdf",
     "invoice",
-    "pdf"
+    "pdf",
+    "pdf-template",
+    "js-pdf-template",
+    "ts-pdf-template"
   ],
   "author": "Edison Neza <edisonneza.dev@gmail.com>",
   "license": "ISC",
@@ -29,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.12",
     "babel-loader": "^8.2.2",
     "typescript": "^4.1.5",
     "webpack": "^5.21.2",

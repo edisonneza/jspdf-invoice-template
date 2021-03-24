@@ -17,9 +17,10 @@ Get it from NPM:
 npm i jspdf-invoice-template
 ```
 
-Alternatively, load latest version from a CDN:
+Alternatively, load latest version from a CDN:<br/>
+<i>(Recommended to use a static version (not @latest) to prevent failure when updates are made)</i>
 ```html
-<script src="https://unpkg.com/jspdf-invoice-template@latest/dist/index.js"></script>
+<script src="https://unpkg.com/jspdf-invoice-template@1.1.0/dist/index.js"></script>
 ```
 <hr/>
 

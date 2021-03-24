@@ -18,7 +18,11 @@ export { OutputType, jsPDF };
  *  logo: {
  *      src: string,
  *      width: number,
- *       height: number
+ *      height: number,
+ *      margin: {
+ *        top: number,
+ *        left: number
+ *      }
  *   },
  *   business: {
  *       name: string,
@@ -40,7 +44,7 @@ export { OutputType, jsPDF };
  *       label: string,
  *       invTotalLabel: string,
  *       num: number,
- *      invDate: string,
+ *       invDate: string,
  *       invGenDate: string,
  *       headerBorder: boolean,
  *       tableBodyBorder: boolean,
@@ -50,6 +54,22 @@ export { OutputType, jsPDF };
  *       invCurrency: string,
  *       invDescLabel: string,
  *       invDesc: string,
+ *       row1?: {
+ *           col1?: string,
+ *           col2?: string,
+ *           col3?: string,
+ *           style?: {
+ *               fontSize?: number
+ *           }
+ *       },
+ *       row2?: {
+ *           col1?: string,
+ *           col2?: string,
+ *           col3?: string,
+ *           style?: {
+ *               fontSize?: number
+ *           }
+ *       },
  *   },
  *   footer?: {
  *       text: string,
@@ -71,6 +91,10 @@ function jsPDFInvoiceTemplate(props) {
       src: (props.logo && props.logo.src) || "",
       width: (props.logo && props.logo.width) || "",
       height: (props.logo && props.logo.height) || "",
+      margin: {
+        top: props?.logo?.margin?.top || 0,
+        left: props?.logo?.margin?.left || 0,
+      },
     },
     business: {
       name: props.business.name || "",
@@ -102,6 +126,22 @@ function jsPDFInvoiceTemplate(props) {
       invCurrency: props.invoice.invCurrency || "",
       invDescLabel: props.invoice.invDescLabel || "",
       invDesc: props.invoice.invDesc || "",
+      row1: {
+        col1: props?.invoice?.row1?.col1 || "",
+        col2: props?.invoice?.row1?.col2 || "",
+        col3: props?.invoice?.row1?.col3 || "",
+        style: {
+          fontSize: props?.invoice?.row1?.style?.fontSize || 12,
+        },
+      },
+      row2: {
+        col1: props?.invoice?.row2?.col1 || "",
+        col2: props?.invoice?.row2?.col2 || "",
+        col3: props?.invoice?.row2?.col3 || "",
+        style: {
+          fontSize: props?.invoice?.row2?.style?.fontSize || 12,
+        },
+      },
     },
     footer: {
       text: (props.footer && props.footer.text) || "",
@@ -158,8 +198,8 @@ function jsPDFInvoiceTemplate(props) {
     //doc.text(htmlDoc.sessionDateText, docWidth - (doc.getTextWidth(htmlDoc.sessionDateText) + 10), currentHeight);
     doc.addImage(
       imageHeader,
-      10,
-      currentHeight - 5,
+      10 + param.logo.margin.left,
+      currentHeight - 5 + param.logo.margin.top,
       param.logo.width,
       param.logo.height
     );
@@ -349,6 +389,48 @@ function jsPDFInvoiceTemplate(props) {
   doc.text(docWidth / 1.5, currentHeight, param.invoice.invTotalLabel, "right");
   doc.text(docWidth - 25, currentHeight, param.invoice.invTotal, "right");
   doc.text(docWidth - 10, currentHeight, param.invoice.invCurrency, "right");
+
+  //row1
+  if (
+    param.invoice.row1 &&
+    (param.invoice.row1.col1 ||
+      param.invoice.row1.col2 ||
+      param.invoice.row1.col3)
+  ) {
+    currentHeight += pdfConfig.lineHeight;
+    doc.setFontSize(param.invoice.row1.style.fontSize);
+
+    doc.text(docWidth / 1.5, currentHeight, param.invoice.row1.col1, "right");
+    doc.text(docWidth - 25, currentHeight, param.invoice.row1.col2, "right");
+    doc.text(docWidth - 10, currentHeight, param.invoice.row1.col3, "right");
+  }
+  //end row1
+
+  //row2
+  if (
+    param.invoice.row2 &&
+    (param.invoice.row2.col1 ||
+      param.invoice.row2.col2 ||
+      param.invoice.row2.col3)
+  ) {
+    currentHeight += pdfConfig.lineHeight;
+    doc.setFontSize(param.invoice.row2.style.fontSize);
+
+    doc.text(docWidth / 1.5, currentHeight, param.invoice.row2.col1, "right");
+    doc.text(docWidth - 25, currentHeight, param.invoice.row2.col2, "right");
+    doc.text(docWidth - 10, currentHeight, param.invoice.row2.col3, "right");
+  }
+  //end row2
+
+  if (param.orientationLandscape && currentHeight + invDescSize > 173) {
+    doc.addPage();
+    currentHeight = 10;
+  }
+
+  if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
+    doc.addPage();
+    currentHeight = 10;
+  }
 
   doc.setTextColor(colorBlack);
   currentHeight += pdfConfig.subLineHeight;

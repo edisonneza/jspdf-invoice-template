@@ -5,7 +5,7 @@ const OutputType = {
   DataUriString: "datauristring", //returns the data uri string
   DataUri: "datauri", //opens the data uri in current window
   DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
-  Blob: "dataurlnewwindow", //return blob format of the doc
+  Blob: "blob", //return blob format of the doc
 };
 
 export { OutputType, jsPDF };

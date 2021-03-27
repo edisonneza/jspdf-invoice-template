@@ -13,48 +13,49 @@ export { OutputType, jsPDF };
 /**
  *
  * @param { {
- *  outputType: OutputType | string
+ *  outputType: OutputType | string,
+ *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
- *  orientationLandscape: boolean,
- *  logo: {
- *      src: string,
- *      width: number,
- *      height: number,
- *      margin: {
- *        top: number,
- *        left: number
+ *  orientationLandscape?: boolean,
+ *  logo?: {
+ *      src?: string,
+ *      width?: number,
+ *      height?: number,
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
  *      }
  *   },
- *   business: {
- *       name: string,
- *       address: string,
- *       phone: string,
- *       email: string,
- *       email_1: string,
- *       website: string,
+ *   business?: {
+ *       name?: string,
+ *       address?: string,
+ *       phone?: string,
+ *       email?: string,
+ *       email_1?: string,
+ *       website?: string,
  *   },
- *   contact: {
- *       label: string,
- *       name: string,
- *       address: string,
- *       phone: string,
- *       email: string,
- *       otherInfo: string,
+ *   contact?: {
+ *       label?: string,
+ *       name?: string,
+ *       address?: string,
+ *       phone?: string,
+ *       email?: string,
+ *       otherInfo?: string,
  *   },
- *   invoice: {
- *       label: string,
- *       invTotalLabel: string,
- *       num: number,
- *       invDate: string,
- *       invGenDate: string,
- *       headerBorder: boolean,
- *       tableBodyBorder: boolean,
- *       header: string[],
- *       table: any,
- *       invTotal: string,
- *       invCurrency: string,
- *       invDescLabel: string,
- *       invDesc: string,
+ *   invoice?: {
+ *       label?: string,
+ *       invTotalLabel?: string,
+ *       num?: number,
+ *       invDate?: string,
+ *       invGenDate?: string,
+ *       headerBorder?: boolean,
+ *       tableBodyBorder?: boolean,
+ *       header?: string[],
+ *       table?: any,
+ *       invTotal?: string,
+ *       invCurrency?: string,
+ *       invDescLabel?: string,
+ *       invDesc?: string,
  *       row1?: {
  *           col1?: string,
  *           col2?: string,
@@ -73,80 +74,75 @@ export { OutputType, jsPDF };
  *       },
  *   },
  *   footer?: {
- *       text: string,
+ *       text?: string,
  *   },
- *   pageEnable: boolean,
+ *   pageEnable?: boolean,
  *   pageLabel?: string, } } props
  */
 function jsPDFInvoiceTemplate(props) {
-  if (!props.business || !props.contact || !props.invoice)
-    throw Error(
-      "Props must contain 'business', 'contact' and 'invoice' objects."
-    );
-
   const param = {
     outputType: props.outputType || "save",
     returnJsPDFDocObject: props.returnJsPDFDocObject || false,
     fileName: props.fileName || "",
     orientationLandscape: props.orientationLandscape || false,
     logo: {
-      src: (props.logo && props.logo.src) || "",
-      width: (props.logo && props.logo.width) || "",
-      height: (props.logo && props.logo.height) || "",
+      src: props.logo?.src || "",
+      width: props.logo?.width || "",
+      height: props.logo?.height || "",
       margin: {
-        top: props?.logo?.margin?.top || 0,
-        left: props?.logo?.margin?.left || 0,
+        top: props.logo?.margin?.top || 0,
+        left: props.logo?.margin?.left || 0,
       },
     },
     business: {
-      name: props.business.name || "",
-      address: props.business.address || "",
-      phone: props.business.phone || "",
-      email: props.business.email || "",
-      email_1: props.business.email_1 || "",
-      website: props.business.website || "",
+      name: props.business?.name || "",
+      address: props.business?.address || "",
+      phone: props.business?.phone || "",
+      email: props.business?.email || "",
+      email_1: props.business?.email_1 || "",
+      website: props.business?.website || "",
     },
     contact: {
-      label: props.contact.label || "",
-      name: props.contact.name || "",
-      address: props.contact.address || "",
-      phone: props.contact.phone || "",
-      email: props.contact.email || "",
-      otherInfo: props.contact.otherInfo || "",
+      label: props.contact?.label || "",
+      name: props.contact?.name || "",
+      address: props.contact?.address || "",
+      phone: props.contact?.phone || "",
+      email: props.contact?.email || "",
+      otherInfo: props.contact?.otherInfo || "",
     },
     invoice: {
-      label: props.invoice.label || "",
-      invTotalLabel: props.invoice.invTotalLabel || "",
-      num: props.invoice.num || "",
-      invDate: props.invoice.invDate || "",
-      invGenDate: props.invoice.invGenDate || "",
-      headerBorder: props.invoice.headerBorder || false,
-      tableBodyBorder: props.invoice.tableBodyBorder || false,
-      header: props.invoice.header || [],
-      table: props.invoice.table || [],
-      invTotal: props.invoice.invTotal || "",
-      invCurrency: props.invoice.invCurrency || "",
-      invDescLabel: props.invoice.invDescLabel || "",
-      invDesc: props.invoice.invDesc || "",
+      label: props.invoice?.label || "",
+      invTotalLabel: props.invoice?.invTotalLabel || "",
+      num: props.invoice?.num || "",
+      invDate: props.invoice?.invDate || "",
+      invGenDate: props.invoice?.invGenDate || "",
+      headerBorder: props.invoice?.headerBorder || false,
+      tableBodyBorder: props.invoice?.tableBodyBorder || false,
+      header: props.invoice?.header || [],
+      table: props.invoice?.table || [],
+      invTotal: props.invoice?.invTotal || "",
+      invCurrency: props.invoice?.invCurrency || "",
+      invDescLabel: props.invoice?.invDescLabel || "",
+      invDesc: props.invoice?.invDesc || "",
       row1: {
-        col1: props?.invoice?.row1?.col1 || "",
-        col2: props?.invoice?.row1?.col2 || "",
-        col3: props?.invoice?.row1?.col3 || "",
+        col1: props.invoice?.row1?.col1 || "",
+        col2: props.invoice?.row1?.col2 || "",
+        col3: props.invoice?.row1?.col3 || "",
         style: {
-          fontSize: props?.invoice?.row1?.style?.fontSize || 12,
+          fontSize: props.invoice?.row1?.style?.fontSize || 12,
         },
       },
       row2: {
-        col1: props?.invoice?.row2?.col1 || "",
-        col2: props?.invoice?.row2?.col2 || "",
-        col3: props?.invoice?.row2?.col3 || "",
+        col1: props.invoice?.row2?.col1 || "",
+        col2: props.invoice?.row2?.col2 || "",
+        col3: props.invoice?.row2?.col3 || "",
         style: {
-          fontSize: props?.invoice?.row2?.style?.fontSize || 12,
+          fontSize: props.invoice?.row2?.style?.fontSize || 12,
         },
       },
     },
     footer: {
-      text: (props.footer && props.footer.text) || "",
+      text: props.footer?.text || "",
     },
     pageEnable: props.pageEnable || false,
     pageLabel: props.pageLabel || "Page",
@@ -225,8 +221,11 @@ function jsPDFInvoiceTemplate(props) {
   currentHeight += pdfConfig.subLineHeight;
   doc.text(docWidth - 10, currentHeight, param.business.website, "right");
 
-  currentHeight += pdfConfig.subLineHeight;
-  doc.line(10, currentHeight, docWidth - 10, currentHeight);
+  //line breaker after logo & business info
+  if (param.invoice.header.length) {
+    currentHeight += pdfConfig.subLineHeight;
+    doc.line(10, currentHeight, docWidth - 10, currentHeight);
+  }
 
   //Contact part
   doc.setTextColor(colorGray);
@@ -248,8 +247,10 @@ function jsPDFInvoiceTemplate(props) {
       param.invoice.label + param.invoice.num,
       "right"
     );
-    currentHeight += pdfConfig.subLineHeight;
   }
+
+  if (param.contact.name || (param.invoice.label && param.invoice.num))
+    currentHeight += pdfConfig.subLineHeight;
 
   doc.setTextColor(colorGray);
   doc.setFontSize(pdfConfig.fieldTextSize - 2);
@@ -384,9 +385,17 @@ function jsPDFInvoiceTemplate(props) {
   doc.setFontSize(pdfConfig.labelTextSize);
   currentHeight += pdfConfig.lineHeight;
 
-  doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
+  //line breaker before invoce total
+  if (
+    param.invoice.header.length &&
+    (param.invoice.invTotal ||
+      param.invoice.invTotalLabel ||
+      param.invoice.invCurrency)
+  ) {
+    doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
+    currentHeight += pdfConfig.lineHeight;
+  }
 
-  currentHeight += pdfConfig.lineHeight;
   //     doc.text("Faleminderit!", 10, currentHeight);
   doc.text(docWidth / 1.5, currentHeight, param.invoice.invTotalLabel, "right");
   doc.text(docWidth - 25, currentHeight, param.invoice.invTotal, "right");
@@ -446,13 +455,15 @@ function jsPDFInvoiceTemplate(props) {
       doc.setFontSize(pdfConfig.fieldTextSize - 2);
       doc.setTextColor(colorGray);
 
-      doc.text(docWidth / 2, docHeight - 10, param.footer.text, "center");
-      doc.setPage(i);
-      doc.text(
-        param.pageLabel + " " + i + " / " + doc.getNumberOfPages(),
-        docWidth - 20,
-        doc.internal.pageSize.height - 6
-      );
+      if (param.pageEnable) {
+        doc.text(docWidth / 2, docHeight - 10, param.footer.text, "center");
+        doc.setPage(i);
+        doc.text(
+          param.pageLabel + " " + i + " / " + doc.getNumberOfPages(),
+          docWidth - 20,
+          doc.internal.pageSize.height - 6
+        );
+      }
 
       if (param.orientationLandscape && currentHeight + invDescSize > 183) {
         doc.addPage();

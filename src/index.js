@@ -5,7 +5,8 @@ const OutputType = {
   DataUriString: "datauristring", //returns the data uri string
   DataUri: "datauri", //opens the data uri in current window
   DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
-  Blob: "blob", //return blob format of the doc
+  Blob: "blob", //return blob format of the doc,
+  ArrayBuffer: "arraybuffer", //return ArrayBuffer format
 };
 
 export { OutputType, jsPDF };
@@ -527,6 +528,18 @@ function jsPDFInvoiceTemplate(props) {
     returnObj = {
       ...returnObj,
       blob: blobOutput,
+    };
+  } else if (param.outputType === "datauristring") {
+    returnObj = {
+      ...returnObj,
+      dataUriString: doc.output("datauristring", {
+        filename: param.fileName,
+      }),
+    };
+  } else if (param.outputType === "arraybuffer") {
+    returnObj = {
+      ...returnObj,
+      arrayBuffer: doc.output("arraybuffer"),
     };
   } else
     doc.output(param.outputType, {

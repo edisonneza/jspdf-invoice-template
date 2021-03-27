@@ -5,6 +5,7 @@ export namespace OutputType {
     const DataUri: string;
     const DataUrlNewWindow: string;
     const Blob: string;
+    const ArrayBuffer: string;
 }
 import { jsPDF } from "jspdf";
 /**
@@ -83,6 +84,7 @@ declare function jsPDFInvoiceTemplate(props: {
         DataUri: string;
         DataUrlNewWindow: string;
         Blob: string;
+        ArrayBuffer: string;
     } | string;
     returnJsPDFDocObject?: boolean;
     fileName: string;
@@ -150,5 +152,9 @@ declare function jsPDFInvoiceTemplate(props: {
     pageLabel?: string;
 }): {
     pagesNumber: number;
+    jsPDFDocObject?: jsPDF;
+    blob?: Blob;
+    dataUriString?: string;
+    arrayBuffer?: ArrayBuffer;
 };
 export { jsPDF };

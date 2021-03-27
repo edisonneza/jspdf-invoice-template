@@ -5,6 +5,7 @@ const OutputType = {
   DataUriString: "datauristring", //returns the data uri string
   DataUri: "datauri", //opens the data uri in current window
   DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
+  Blob: "dataurlnewwindow", //return blob format of the doc
 };
 
 export { OutputType, jsPDF };
@@ -85,6 +86,7 @@ function jsPDFInvoiceTemplate(props) {
 
   const param = {
     outputType: props.outputType || "save",
+    returnJsPDFDocObject: props.returnJsPDFDocObject || false,
     fileName: props.fileName || "",
     orientationLandscape: props.orientationLandscape || false,
     logo: {
@@ -497,16 +499,30 @@ function jsPDFInvoiceTemplate(props) {
     );
   }
 
+  let returnObj = {
+    pagesNumber: doc.getNumberOfPages(),
+  };
+
+  if (param.returnJsPDFDocObject) {
+    returnObj = {
+      ...returnObj,
+      jsPDFDocObject: doc,
+    };
+  }
+
   if (param.outputType === "save") doc.save(param.fileName);
-  else
+  else if (param.outputType === "blob") {
+    const blobOutput = doc.output("blob");
+    returnObj = {
+      ...returnObj,
+      blob: blobOutput,
+    };
+  } else
     doc.output(param.outputType, {
       filename: param.fileName,
     });
 
-  return {
-    pageNumber: doc.getNumberOfPages(),
-    //docObject: doc,
-  };
+  return returnObj;
 }
 
 export default jsPDFInvoiceTemplate;

@@ -24,11 +24,16 @@
         <div class="row mt-4">
             <div class="col-sm">
                 <h3> jsPDF Invoice Template - Demo </h3>
-                <p> Edit the object below to generate another PDF document</p>
+                <p> Edit the object below to generate another PDF document.</p>
+                <h6><a target="_blank"
+                        href="https://edisonneza.github.io/jspdf-invoice-template/documentation/global.html#jsPDFInvoiceTemplate">Take
+                        a look at function documentation.</a></h6>
                 <div class="alert alert-danger d-none" role="alert">
                     <b>Syntax Error.</b> Please double check the object, because the format is incorrect!
                 </div>
-                <textarea class="form-control" rows="20" id="editor">
+                <div class="row">
+                    <div class="col-12">
+                        <textarea class="form-control" rows="20" id="editor">
                     {
                         outputType: "save",
                         returnJsPDFDocObject: true,
@@ -104,16 +109,23 @@
                         pageLabel: "Page ",
                     }
             </textarea>
-
-                <div style="text-align: right;" class="mt-4">
-                    <button class="btn btn-primary" onclick="GeneratePDF();">Generate PDF Invoice</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-6 mt-3">
+                            <h5><a target="_blank" href="https://github.com/edisonneza/jspdf-invoice-template#usage">How
+                                    to
+                                    import in my
+                                    project?</a></h5>
+                        </div>
+                        <div style="text-align: right;">
+                            <button class="btn btn-primary" onclick="GeneratePDF();">Generate PDF Invoice</button>
+                        </div>
+                    </div>
                 </div>
 
                 <br />
-                <div class="text-center">
-                    <h4><a href="https://github.com/edisonneza/jspdf-invoice-template#usage">How to import in my
-                            project?</a></h4>
-                </div>
             </div>
         </div>
     </div>

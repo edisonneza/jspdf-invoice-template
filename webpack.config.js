@@ -7,7 +7,8 @@ module.exports = {
     path: path.resolve('dist'),
     filename: 'index.js',
     library: "jsPDFInvoiceTemplate",
-    libraryTarget: 'var',
+    libraryTarget: 'umd',
+    globalObject: 'this'
   },
   module: {
     rules: [

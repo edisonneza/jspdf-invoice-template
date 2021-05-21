@@ -4,53 +4,56 @@ export namespace OutputType {
     const DataUriString: string;
     const DataUri: string;
     const DataUrlNewWindow: string;
+    const Blob: string;
+    const ArrayBuffer: string;
 }
 import { jsPDF } from "jspdf";
 /**
  *
  * @param { {
- *  outputType: OutputType | string
+ *  outputType: OutputType | string,
+ *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
- *  orientationLandscape: boolean,
- *  logo: {
- *      src: string,
- *      width: number,
- *      height: number,
+ *  orientationLandscape?: boolean,
+ *  logo?: {
+ *      src?: string,
+ *      width?: number,
+ *      height?: number,
  *      margin?: {
  *        top?: number,
  *        left?: number
  *      }
  *   },
- *   business: {
- *       name: string,
- *       address: string,
- *       phone: string,
- *       email: string,
- *       email_1: string,
- *       website: string,
+ *   business?: {
+ *       name?: string,
+ *       address?: string,
+ *       phone?: string,
+ *       email?: string,
+ *       email_1?: string,
+ *       website?: string,
  *   },
- *   contact: {
- *       label: string,
- *       name: string,
- *       address: string,
- *       phone: string,
- *       email: string,
- *       otherInfo: string,
+ *   contact?: {
+ *       label?: string,
+ *       name?: string,
+ *       address?: string,
+ *       phone?: string,
+ *       email?: string,
+ *       otherInfo?: string,
  *   },
- *   invoice: {
- *       label: string,
- *       invTotalLabel: string,
- *       num: number,
- *       invDate: string,
- *       invGenDate: string,
- *       headerBorder: boolean,
- *       tableBodyBorder: boolean,
- *       header: string[],
- *       table: any,
- *       invTotal: string,
- *       invCurrency: string,
- *       invDescLabel: string,
- *       invDesc: string,
+ *   invoice?: {
+ *       label?: string,
+ *       invTotalLabel?: string,
+ *       num?: number,
+ *       invDate?: string,
+ *       invGenDate?: string,
+ *       headerBorder?: boolean,
+ *       tableBodyBorder?: boolean,
+ *       header?: string[],
+ *       table?: any,
+ *       invTotal?: string,
+ *       invCurrency?: string,
+ *       invDescLabel?: string,
+ *       invDesc?: string,
  *       row1?: {
  *           col1?: string,
  *           col2?: string,
@@ -69,9 +72,9 @@ import { jsPDF } from "jspdf";
  *       },
  *   },
  *   footer?: {
- *       text: string,
+ *       text?: string,
  *   },
- *   pageEnable: boolean,
+ *   pageEnable?: boolean,
  *   pageLabel?: string, } } props
  */
 declare function jsPDFInvoiceTemplate(props: {
@@ -80,48 +83,51 @@ declare function jsPDFInvoiceTemplate(props: {
         DataUriString: string;
         DataUri: string;
         DataUrlNewWindow: string;
+        Blob: string;
+        ArrayBuffer: string;
     } | string;
+    returnJsPDFDocObject?: boolean;
     fileName: string;
-    orientationLandscape: boolean;
-    logo: {
-        src: string;
-        width: number;
-        height: number;
-        margin: {
-            top: number;
-            left: number;
+    orientationLandscape?: boolean;
+    logo?: {
+        src?: string;
+        width?: number;
+        height?: number;
+        margin?: {
+            top?: number;
+            left?: number;
         };
     };
-    business: {
-        name: string;
-        address: string;
-        phone: string;
-        email: string;
-        email_1: string;
-        website: string;
+    business?: {
+        name?: string;
+        address?: string;
+        phone?: string;
+        email?: string;
+        email_1?: string;
+        website?: string;
     };
-    contact: {
-        label: string;
-        name: string;
-        address: string;
-        phone: string;
-        email: string;
-        otherInfo: string;
+    contact?: {
+        label?: string;
+        name?: string;
+        address?: string;
+        phone?: string;
+        email?: string;
+        otherInfo?: string;
     };
-    invoice: {
-        label: string;
-        invTotalLabel: string;
-        num: number;
-        invDate: string;
-        invGenDate: string;
-        headerBorder: boolean;
-        tableBodyBorder: boolean;
-        header: string[];
-        table: any;
-        invTotal: string;
-        invCurrency: string;
-        invDescLabel: string;
-        invDesc: string;
+    invoice?: {
+        label?: string;
+        invTotalLabel?: string;
+        num?: number;
+        invDate?: string;
+        invGenDate?: string;
+        headerBorder?: boolean;
+        tableBodyBorder?: boolean;
+        header?: string[];
+        table?: any;
+        invTotal?: string;
+        invCurrency?: string;
+        invDescLabel?: string;
+        invDesc?: string;
         row1?: {
             col1?: string;
             col2?: string;
@@ -140,11 +146,15 @@ declare function jsPDFInvoiceTemplate(props: {
         };
     };
     footer?: {
-        text: string;
+        text?: string;
     };
-    pageEnable: boolean;
+    pageEnable?: boolean;
     pageLabel?: string;
 }): {
-    pageNumber: number;
+    pagesNumber: number;
+    jsPDFDocObject?: jsPDF;
+    blob?: Blob;
+    dataUriString?: string;
+    arrayBuffer?: ArrayBuffer;
 };
 export { jsPDF };

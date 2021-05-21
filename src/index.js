@@ -5,6 +5,8 @@ const OutputType = {
   DataUriString: "datauristring", //returns the data uri string
   DataUri: "datauri", //opens the data uri in current window
   DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
+  Blob: "blob", //return blob format of the doc,
+  ArrayBuffer: "arraybuffer", //return ArrayBuffer format
 };
 
 export { OutputType, jsPDF };
@@ -12,48 +14,49 @@ export { OutputType, jsPDF };
 /**
  *
  * @param { {
- *  outputType: OutputType | string
+ *  outputType: OutputType | string,
+ *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
- *  orientationLandscape: boolean,
- *  logo: {
- *      src: string,
- *      width: number,
- *      height: number,
- *      margin: {
- *        top: number,
- *        left: number
+ *  orientationLandscape?: boolean,
+ *  logo?: {
+ *      src?: string,
+ *      width?: number,
+ *      height?: number,
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
  *      }
  *   },
- *   business: {
- *       name: string,
- *       address: string,
- *       phone: string,
- *       email: string,
- *       email_1: string,
- *       website: string,
+ *   business?: {
+ *       name?: string,
+ *       address?: string,
+ *       phone?: string,
+ *       email?: string,
+ *       email_1?: string,
+ *       website?: string,
  *   },
- *   contact: {
- *       label: string,
- *       name: string,
- *       address: string,
- *       phone: string,
- *       email: string,
- *       otherInfo: string,
+ *   contact?: {
+ *       label?: string,
+ *       name?: string,
+ *       address?: string,
+ *       phone?: string,
+ *       email?: string,
+ *       otherInfo?: string,
  *   },
- *   invoice: {
- *       label: string,
- *       invTotalLabel: string,
- *       num: number,
- *       invDate: string,
- *       invGenDate: string,
- *       headerBorder: boolean,
- *       tableBodyBorder: boolean,
- *       header: string[],
- *       table: any,
- *       invTotal: string,
- *       invCurrency: string,
- *       invDescLabel: string,
- *       invDesc: string,
+ *   invoice?: {
+ *       label?: string,
+ *       num?: number,
+ *       invDate?: string,
+ *       invGenDate?: string,
+ *       headerBorder?: boolean,
+ *       tableBodyBorder?: boolean,
+ *       header?: string[],
+ *       table?: any,
+ *       invTotalLabel?: string,
+ *       invTotal?: string,
+ *       invCurrency?: string,
+ *       invDescLabel?: string,
+ *       invDesc?: string,
  *       row1?: {
  *           col1?: string,
  *           col2?: string,
@@ -72,79 +75,75 @@ export { OutputType, jsPDF };
  *       },
  *   },
  *   footer?: {
- *       text: string,
+ *       text?: string,
  *   },
- *   pageEnable: boolean,
+ *   pageEnable?: boolean,
  *   pageLabel?: string, } } props
  */
 function jsPDFInvoiceTemplate(props) {
-  if (!props.business || !props.contact || !props.invoice)
-    throw Error(
-      "Props must contain 'business', 'contact' and 'invoice' objects."
-    );
-
   const param = {
     outputType: props.outputType || "save",
+    returnJsPDFDocObject: props.returnJsPDFDocObject || false,
     fileName: props.fileName || "",
     orientationLandscape: props.orientationLandscape || false,
     logo: {
-      src: (props.logo && props.logo.src) || "",
-      width: (props.logo && props.logo.width) || "",
-      height: (props.logo && props.logo.height) || "",
+      src: props.logo?.src || "",
+      width: props.logo?.width || "",
+      height: props.logo?.height || "",
       margin: {
-        top: props?.logo?.margin?.top || 0,
-        left: props?.logo?.margin?.left || 0,
+        top: props.logo?.margin?.top || 0,
+        left: props.logo?.margin?.left || 0,
       },
     },
     business: {
-      name: props.business.name || "",
-      address: props.business.address || "",
-      phone: props.business.phone || "",
-      email: props.business.email || "",
-      email_1: props.business.email_1 || "",
-      website: props.business.website || "",
+      name: props.business?.name || "",
+      address: props.business?.address || "",
+      phone: props.business?.phone || "",
+      email: props.business?.email || "",
+      email_1: props.business?.email_1 || "",
+      website: props.business?.website || "",
     },
     contact: {
-      label: props.contact.label || "",
-      name: props.contact.name || "",
-      address: props.contact.address || "",
-      phone: props.contact.phone || "",
-      email: props.contact.email || "",
-      otherInfo: props.contact.otherInfo || "",
+      label: props.contact?.label || "",
+      name: props.contact?.name || "",
+      address: props.contact?.address || "",
+      phone: props.contact?.phone || "",
+      email: props.contact?.email || "",
+      otherInfo: props.contact?.otherInfo || "",
     },
     invoice: {
-      label: props.invoice.label || "",
-      invTotalLabel: props.invoice.invTotalLabel || "",
-      num: props.invoice.num || "",
-      invDate: props.invoice.invDate || "",
-      invGenDate: props.invoice.invGenDate || "",
-      headerBorder: props.invoice.headerBorder || false,
-      tableBodyBorder: props.invoice.tableBodyBorder || false,
-      header: props.invoice.header || [],
-      table: props.invoice.table || [],
-      invTotal: props.invoice.invTotal || "",
-      invCurrency: props.invoice.invCurrency || "",
-      invDescLabel: props.invoice.invDescLabel || "",
-      invDesc: props.invoice.invDesc || "",
+      label: props.invoice?.label || "",
+      invTotalLabel: props.invoice?.invTotalLabel || "",
+      num: props.invoice?.num || "",
+      invDate: props.invoice?.invDate || "",
+      invGenDate: props.invoice?.invGenDate || "",
+      headerBorder: props.invoice?.headerBorder || false,
+      tableBodyBorder: props.invoice?.tableBodyBorder || false,
+      header: props.invoice?.header || [],
+      table: props.invoice?.table || [],
+      invTotal: props.invoice?.invTotal || "",
+      invCurrency: props.invoice?.invCurrency || "",
+      invDescLabel: props.invoice?.invDescLabel || "",
+      invDesc: props.invoice?.invDesc || "",
       row1: {
-        col1: props?.invoice?.row1?.col1 || "",
-        col2: props?.invoice?.row1?.col2 || "",
-        col3: props?.invoice?.row1?.col3 || "",
+        col1: props.invoice?.row1?.col1 || "",
+        col2: props.invoice?.row1?.col2 || "",
+        col3: props.invoice?.row1?.col3 || "",
         style: {
-          fontSize: props?.invoice?.row1?.style?.fontSize || 12,
+          fontSize: props.invoice?.row1?.style?.fontSize || 12,
         },
       },
       row2: {
-        col1: props?.invoice?.row2?.col1 || "",
-        col2: props?.invoice?.row2?.col2 || "",
-        col3: props?.invoice?.row2?.col3 || "",
+        col1: props.invoice?.row2?.col1 || "",
+        col2: props.invoice?.row2?.col2 || "",
+        col3: props.invoice?.row2?.col3 || "",
         style: {
-          fontSize: props?.invoice?.row2?.style?.fontSize || 12,
+          fontSize: props.invoice?.row2?.style?.fontSize || 12,
         },
       },
     },
     footer: {
-      text: (props.footer && props.footer.text) || "",
+      text: props.footer?.text || "",
     },
     pageEnable: props.pageEnable || false,
     pageLabel: props.pageLabel || "Page",
@@ -158,9 +157,7 @@ function jsPDFInvoiceTemplate(props) {
     };
   };
   if (param.invoice.table && param.invoice.table.length) {
-    if (
-      Object.keys(param.invoice.table[0]).length != param.invoice.header.length
-    )
+    if (param.invoice.table[0].length != param.invoice.header.length)
       throw Error("Length of header and table column must be equal.");
   }
 
@@ -223,8 +220,11 @@ function jsPDFInvoiceTemplate(props) {
   currentHeight += pdfConfig.subLineHeight;
   doc.text(docWidth - 10, currentHeight, param.business.website, "right");
 
-  currentHeight += pdfConfig.subLineHeight;
-  doc.line(10, currentHeight, docWidth - 10, currentHeight);
+  //line breaker after logo & business info
+  if (param.invoice.header.length) {
+    currentHeight += pdfConfig.subLineHeight;
+    doc.line(10, currentHeight, docWidth - 10, currentHeight);
+  }
 
   //Contact part
   doc.setTextColor(colorGray);
@@ -246,8 +246,10 @@ function jsPDFInvoiceTemplate(props) {
       param.invoice.label + param.invoice.num,
       "right"
     );
-    currentHeight += pdfConfig.subLineHeight;
   }
+
+  if (param.contact.name || (param.invoice.label && param.invoice.num))
+    currentHeight += pdfConfig.subLineHeight;
 
   doc.setTextColor(colorGray);
   doc.setFontSize(pdfConfig.fieldTextSize - 2);
@@ -304,8 +306,8 @@ function jsPDFInvoiceTemplate(props) {
     currentHeight += 2;
 
     param.invoice.header.forEach(function (row, index) {
-      if (index == 0) doc.text(row, 12, currentHeight);
-      else doc.text(row, index * tdWidth + 12, currentHeight);
+      if (index == 0) doc.text(row, 11, currentHeight);
+      else doc.text(row, index * tdWidth + 11, currentHeight);
     });
 
     currentHeight += pdfConfig.subLineHeight - 1;
@@ -313,27 +315,42 @@ function jsPDFInvoiceTemplate(props) {
   };
   addTableHeader();
 
+  //table body
   var tableBodyLength = param.invoice.table.length;
   param.invoice.table.forEach(function (row, index) {
     doc.line(10, currentHeight, docWidth - 10, currentHeight);
-    //size should be the same used in other td
-    let itemDesc = splitTextAndGetHeight(row.desc, tdWidth);
-    doc.text(itemDesc.text, tdWidth + 12, currentHeight + 4);
-    if (param.invoice.tableBodyBorder) addTableBodyBoarder(itemDesc.height + 1);
 
-    currentHeight += itemDesc.height - 4;
+    //get nax height for the current row
+    let rowsHeight = [];
+    var getRowsHeight = function () {
+      row.forEach(function (rr, index) {
+        //size should be the same used in other td
+        let item = splitTextAndGetHeight(rr.toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+        rowsHeight.push(item.height);
+      });
+    };
+    getRowsHeight();
+    var maxHeight = Math.max(...rowsHeight);
 
-    doc.text(row.num.toString(), 12, currentHeight + 4);
-    doc.text(row.price.toString(), tdWidth * 2 + 12, currentHeight + 4);
-    doc.text(row.quantity.toString(), tdWidth * 3 + 12, currentHeight + 4);
-    doc.text(row.unit, tdWidth * 4 + 12, currentHeight + 4);
-    doc.text(row.total.toString(), tdWidth * 5 + 12, currentHeight + 4);
+    //body borders
+    if (param.invoice.tableBodyBorder) addTableBodyBoarder(maxHeight + 1);
+
+    //display text into row cells
+    //Object.entries(row).forEach(function(col, index) {
+    row.forEach(function (rr, index) {
+      let item = splitTextAndGetHeight(rr.toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+
+      if (index == 0) doc.text(item.text, 11, currentHeight + 4);
+      else doc.text(item.text, 11 + index * tdWidth, currentHeight + 4);
+    });
+
+    currentHeight += maxHeight - 4;
 
     //td border height
     currentHeight += 5;
 
     //pre-increase currentHeight to check the height based on next row
-    if (index + 1 < tableBodyLength) currentHeight += itemDesc.height;
+    if (index + 1 < tableBodyLength) currentHeight += maxHeight;
 
     if (
       param.orientationLandscape &&
@@ -360,12 +377,14 @@ function jsPDFInvoiceTemplate(props) {
     //reset the height that was increased to check the next row
     if (index + 1 < tableBodyLength && currentHeight > 30)
       // check if new page
-      currentHeight -= itemDesc.height;
+      currentHeight -= maxHeight;
   });
   //     doc.line(10, currentHeight, docWidth - 10, currentHeight); //nese duam te shfaqim line ne fund te tabeles
 
-  var invDescSize = splitTextAndGetHeight(param.invoice.invDesc, docWidth / 2)
-    .height;
+  var invDescSize = splitTextAndGetHeight(
+    param.invoice.invDesc,
+    docWidth / 2
+  ).height;
   //END TABLE PART
 
   if (param.orientationLandscape && currentHeight + invDescSize > 173) {
@@ -382,9 +401,17 @@ function jsPDFInvoiceTemplate(props) {
   doc.setFontSize(pdfConfig.labelTextSize);
   currentHeight += pdfConfig.lineHeight;
 
-  doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
+  //line breaker before invoce total
+  if (
+    param.invoice.header.length &&
+    (param.invoice.invTotal ||
+      param.invoice.invTotalLabel ||
+      param.invoice.invCurrency)
+  ) {
+    doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
+    currentHeight += pdfConfig.lineHeight;
+  }
 
-  currentHeight += pdfConfig.lineHeight;
   //     doc.text("Faleminderit!", 10, currentHeight);
   doc.text(docWidth / 1.5, currentHeight, param.invoice.invTotalLabel, "right");
   doc.text(docWidth - 25, currentHeight, param.invoice.invTotal, "right");
@@ -444,13 +471,15 @@ function jsPDFInvoiceTemplate(props) {
       doc.setFontSize(pdfConfig.fieldTextSize - 2);
       doc.setTextColor(colorGray);
 
-      doc.text(docWidth / 2, docHeight - 10, param.footer.text, "center");
-      doc.setPage(i);
-      doc.text(
-        param.pageLabel + " " + i + " / " + doc.getNumberOfPages(),
-        docWidth - 20,
-        doc.internal.pageSize.height - 6
-      );
+      if (param.pageEnable) {
+        doc.text(docWidth / 2, docHeight - 10, param.footer.text, "center");
+        doc.setPage(i);
+        doc.text(
+          param.pageLabel + " " + i + " / " + doc.getNumberOfPages(),
+          docWidth - 20,
+          doc.internal.pageSize.height - 6
+        );
+      }
 
       if (param.orientationLandscape && currentHeight + invDescSize > 183) {
         doc.addPage();
@@ -497,16 +526,42 @@ function jsPDFInvoiceTemplate(props) {
     );
   }
 
+  let returnObj = {
+    pagesNumber: doc.getNumberOfPages(),
+  };
+
+  if (param.returnJsPDFDocObject) {
+    returnObj = {
+      ...returnObj,
+      jsPDFDocObject: doc,
+    };
+  }
+
   if (param.outputType === "save") doc.save(param.fileName);
-  else
+  else if (param.outputType === "blob") {
+    const blobOutput = doc.output("blob");
+    returnObj = {
+      ...returnObj,
+      blob: blobOutput,
+    };
+  } else if (param.outputType === "datauristring") {
+    returnObj = {
+      ...returnObj,
+      dataUriString: doc.output("datauristring", {
+        filename: param.fileName,
+      }),
+    };
+  } else if (param.outputType === "arraybuffer") {
+    returnObj = {
+      ...returnObj,
+      arrayBuffer: doc.output("arraybuffer"),
+    };
+  } else
     doc.output(param.outputType, {
       filename: param.fileName,
     });
 
-  return {
-    pageNumber: doc.getNumberOfPages(),
-    //docObject: doc,
-  };
+  return returnObj;
 }
 
 export default jsPDFInvoiceTemplate;

@@ -34,7 +34,6 @@
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-optional-chaining": "^7.13.12",
     "babel-loader": "^8.2.2",
-    "babel-preset-es2015": "^6.24.1",
     "typescript": "^4.1.5",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0"

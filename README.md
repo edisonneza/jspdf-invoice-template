@@ -108,14 +108,14 @@ var props = {
         headerBorder: false,
         tableBodyBorder: false,
         header: ["#", "Description", "Price", "Quantity", "Unit", "Total"],
-        table: Array.from(Array(10), (item, index)=>({
-            col1: index + 1,
-            col2: "There are many variations ",
-            col3: 200.5,
-            col4: 4.5,
-            col5: "m2",
-            col6: 400.5
-        })),
+        table: Array.from(Array(10), (item, index)=>([
+            index + 1,
+            "There are many variations ",
+            200.5,
+            4.5,
+            "m2",
+            400.5
+        ])),
         invTotalLabel: "Total:",
         invTotal: "145,250.50",
         invCurrency: "ALL",

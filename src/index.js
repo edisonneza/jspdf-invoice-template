@@ -157,9 +157,7 @@ function jsPDFInvoiceTemplate(props) {
     };
   };
   if (param.invoice.table && param.invoice.table.length) {
-    if (
-      Object.keys(param.invoice.table[0]).length != param.invoice.header.length
-    )
+    if (param.invoice.table[0].length != param.invoice.header.length)
       throw Error("Length of header and table column must be equal.");
   }
 
@@ -308,8 +306,8 @@ function jsPDFInvoiceTemplate(props) {
     currentHeight += 2;
 
     param.invoice.header.forEach(function (row, index) {
-      if (index == 0) doc.text(row, 12, currentHeight);
-      else doc.text(row, index * tdWidth + 12, currentHeight);
+      if (index == 0) doc.text(row, 11, currentHeight);
+      else doc.text(row, index * tdWidth + 11, currentHeight);
     });
 
     currentHeight += pdfConfig.subLineHeight - 1;
@@ -317,15 +315,17 @@ function jsPDFInvoiceTemplate(props) {
   };
   addTableHeader();
 
+  //table body
   var tableBodyLength = param.invoice.table.length;
   param.invoice.table.forEach(function (row, index) {
     doc.line(10, currentHeight, docWidth - 10, currentHeight);
+
     //get nax height for the current row
     let rowsHeight = [];
     var getRowsHeight = function () {
-      Object.entries(row).forEach(function (col, index) {
-        //size should be the same used in others td
-        let item = splitTextAndGetHeight(col[1].toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+      row.forEach(function (rr, index) {
+        //size should be the same used in other td
+        let item = splitTextAndGetHeight(rr.toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
         rowsHeight.push(item.height);
       });
     };
@@ -336,8 +336,9 @@ function jsPDFInvoiceTemplate(props) {
     if (param.invoice.tableBodyBorder) addTableBodyBoarder(maxHeight + 1);
 
     //display text into row cells
-    Object.entries(row).forEach(function (col, index) {
-      let item = splitTextAndGetHeight(col[1].toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+    //Object.entries(row).forEach(function(col, index) {
+    row.forEach(function (rr, index) {
+      let item = splitTextAndGetHeight(rr.toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
 
       if (index == 0) doc.text(item.text, 11, currentHeight + 4);
       else doc.text(item.text, 11 + index * tdWidth, currentHeight + 4);

@@ -8,7 +8,7 @@ From <i><b>v1.2.0</b></i> all properties are optional and you can add them as em
 
 <h4><b><i>Feel free for any suggestion or improvements.</i></b></h4>
 
-## [Demo site](https://edisonneza.github.io/jspdf-invoice-template) | [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/)
+## [Npm](https://edisonneza.github.io/jspdf-invoice-template) | [Demo site](https://edisonneza.github.io/jspdf-invoice-template) | [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/)
 <br/>
 
 # Install and usage
@@ -192,12 +192,22 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <details>
 <summary>--- Changelog ---</summary>
 
-* v.1.2.0: 
+<details open>
+<summary>v.1.3.0</summary>
+
+  * Added feature to add or remove columns 
+  * Dynamic height in all columns
+</details>
+
+<details>
+<summary>v.1.2.0</summary>
 
   * Added returnJsPDFDocObject prop
   * Added support for returning different outputs based on output type prop
   * All parameter object properties are now OPTIONAL
   * Return jspdf doc object, so now can be added new content or edited the pdf file and output it in all types that jsPDF library supports. 
+</details>
+
 </details>
 <hr/>
 

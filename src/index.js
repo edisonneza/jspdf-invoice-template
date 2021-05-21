@@ -45,7 +45,6 @@ export { OutputType, jsPDF };
  *   },
  *   invoice?: {
  *       label?: string,
- *       invTotalLabel?: string,
  *       num?: number,
  *       invDate?: string,
  *       invGenDate?: string,
@@ -53,6 +52,7 @@ export { OutputType, jsPDF };
  *       tableBodyBorder?: boolean,
  *       header?: string[],
  *       table?: any,
+ *       invTotalLabel?: string,
  *       invTotal?: string,
  *       invCurrency?: string,
  *       invDescLabel?: string,
@@ -320,24 +320,36 @@ function jsPDFInvoiceTemplate(props) {
   var tableBodyLength = param.invoice.table.length;
   param.invoice.table.forEach(function (row, index) {
     doc.line(10, currentHeight, docWidth - 10, currentHeight);
-    //size should be the same used in other td
-    let itemDesc = splitTextAndGetHeight(row.desc, tdWidth);
-    doc.text(itemDesc.text, tdWidth + 12, currentHeight + 4);
-    if (param.invoice.tableBodyBorder) addTableBodyBoarder(itemDesc.height + 1);
+    //get nax height for the current row
+    let rowsHeight = [];
+    var getRowsHeight = function () {
+      Object.entries(row).forEach(function (col, index) {
+        //size should be the same used in others td
+        let item = splitTextAndGetHeight(col[1].toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+        rowsHeight.push(item.height);
+      });
+    };
+    getRowsHeight();
+    var maxHeight = Math.max(...rowsHeight);
 
-    currentHeight += itemDesc.height - 4;
+    //body borders
+    if (param.invoice.tableBodyBorder) addTableBodyBoarder(maxHeight + 1);
 
-    doc.text(row.num.toString(), 12, currentHeight + 4);
-    doc.text(row.price.toString(), tdWidth * 2 + 12, currentHeight + 4);
-    doc.text(row.quantity.toString(), tdWidth * 3 + 12, currentHeight + 4);
-    doc.text(row.unit, tdWidth * 4 + 12, currentHeight + 4);
-    doc.text(row.total.toString(), tdWidth * 5 + 12, currentHeight + 4);
+    //display text into row cells
+    Object.entries(row).forEach(function (col, index) {
+      let item = splitTextAndGetHeight(col[1].toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+
+      if (index == 0) doc.text(item.text, 11, currentHeight + 4);
+      else doc.text(item.text, 11 + index * tdWidth, currentHeight + 4);
+    });
+
+    currentHeight += maxHeight - 4;
 
     //td border height
     currentHeight += 5;
 
     //pre-increase currentHeight to check the height based on next row
-    if (index + 1 < tableBodyLength) currentHeight += itemDesc.height;
+    if (index + 1 < tableBodyLength) currentHeight += maxHeight;
 
     if (
       param.orientationLandscape &&
@@ -364,12 +376,14 @@ function jsPDFInvoiceTemplate(props) {
     //reset the height that was increased to check the next row
     if (index + 1 < tableBodyLength && currentHeight > 30)
       // check if new page
-      currentHeight -= itemDesc.height;
+      currentHeight -= maxHeight;
   });
   //     doc.line(10, currentHeight, docWidth - 10, currentHeight); //nese duam te shfaqim line ne fund te tabeles
 
-  var invDescSize = splitTextAndGetHeight(param.invoice.invDesc, docWidth / 2)
-    .height;
+  var invDescSize = splitTextAndGetHeight(
+    param.invoice.invDesc,
+    docWidth / 2
+  ).height;
   //END TABLE PART
 
   if (param.orientationLandscape && currentHeight + invDescSize > 173) {

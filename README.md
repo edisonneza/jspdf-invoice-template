@@ -102,21 +102,21 @@ var props = {
     },
     invoice: {
         label: "Invoice #: ",
-        invTotalLabel: "Total:",
         num: 19,
         invDate: "Payment Date: 01/01/2021 18:12",
         invGenDate: "Invoice Date: 02/02/2021 10:17",
-        header: ["#", "Description", "Price", "Quantity", "Unit", "Total"],
         headerBorder: false,
         tableBodyBorder: false,
+        header: ["#", "Description", "Price", "Quantity", "Unit", "Total"],
         table: Array.from(Array(10), (item, index)=>({
-            num: index + 1,
-            desc: "There are many variations ",
-            price: 200.5,
-            quantity: 4.5,
-            unit: "m2",
-            total: 400.5
+            col1: index + 1,
+            col2: "There are many variations ",
+            col3: 200.5,
+            col4: 4.5,
+            col5: "m2",
+            col6: 400.5
         })),
+        invTotalLabel: "Total:",
         invTotal: "145,250.50",
         invCurrency: "ALL",
         row1: {

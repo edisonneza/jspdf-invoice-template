@@ -6,6 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo - jsPDF Invoice Template Npm Package | © Edison Neza </title>
+    <style>
+        body {
+            background: #212121 !important;
+            color: white !important;
+        }
+
+        textarea.form-control {
+            background-color: inherit !important;
+            color: white !important;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -23,13 +34,17 @@
     <div class="container">
         <div class="row mt-4">
             <div class="col-sm">
-                <h3> jsPDF Invoice Template - Demo </h3>
+                <h3> Javascript PDF Invoice Template - Demo </h3>
                 <p> Edit the object below to generate another PDF document.</p>
                 <h6>
                     <!-- <a target="_blank"
                         href="https://edisonneza.github.io/jspdf-invoice-template/documentation/global.html#jsPDFInvoiceTemplate">Take
                         a look at function documentation.</a> -->
-                    </h6>
+                </h6>
+                <h6><a target="_blank" href="https://github.com/edisonneza/jspdf-invoice-template#usage">How
+                        to
+                        import in my
+                        project?</a></h6>
                 <div class="alert alert-danger d-none" role="alert">
                     <b>Syntax Error.</b> Please double check the object, because the format is incorrect!
                 </div>
@@ -115,13 +130,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <div class="col-12 mt-3">
-                            <h5><a target="_blank" href="https://github.com/edisonneza/jspdf-invoice-template#usage">How
-                                    to
-                                    import in my
-                                    project?</a></h5>
-                        </div>
+                    <div class="col-12 mt-3">
                         <div style="text-align: right;">
                             <button class="btn btn-primary" onclick="GeneratePDF();">Generate PDF Invoice</button>
                         </div>

@@ -193,6 +193,11 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.3.2</summary>
+
+  * Fixed package entry point
+</details>
+<details>
 <summary>v.1.3.1</summary>
 
   * Added feature to add or remove columns 

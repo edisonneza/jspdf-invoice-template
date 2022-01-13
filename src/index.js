@@ -18,6 +18,7 @@ export { OutputType, jsPDF };
  *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
  *  orientationLandscape?: boolean,
+ *  compress?: boolean,
  *  logo?: {
  *      src?: string,
  *      width?: number,
@@ -86,6 +87,7 @@ function jsPDFInvoiceTemplate(props) {
     returnJsPDFDocObject: props.returnJsPDFDocObject || false,
     fileName: props.fileName || "",
     orientationLandscape: props.orientationLandscape || false,
+    compress: props.compress || false,
     logo: {
       src: props.logo?.src || "",
       width: props.logo?.width || "",
@@ -163,6 +165,7 @@ function jsPDFInvoiceTemplate(props) {
 
   const options = {
     orientation: param.orientationLandscape ? "landscape" : "",
+    compress: param.compress
   };
 
   var doc = new jsPDF(options);

@@ -36,6 +36,7 @@
             <div class="col-sm">
                 <h3> Javascript PDF Invoice Template - Demo </h3>
                 <p> Edit the object below to generate another PDF document.</p>
+                <p><i>(Object based on v1.4.0)</i></p>
                 <h6>
                     <!-- <a target="_blank"
                         href="https://edisonneza.github.io/jspdf-invoice-template/documentation/global.html#jsPDFInvoiceTemplate">Take
@@ -56,6 +57,7 @@
                             returnJsPDFDocObject: true,
                             fileName: "Invoice 2021",
                             orientationLandscape: false,
+                            compress: true,
                             logo: {
                                 src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
                                 width: 53.33, //aspect ratio = width/height
@@ -86,13 +88,36 @@
                                 num: 19,
                                 invDate: "Payment Date: 01/01/2021 18:12",
                                 invGenDate: "Invoice Date: 02/02/2021 10:17",
-                                headerBorder: false,
-                                tableBodyBorder: false,
-                                header: ["#", "Title", "Description", "Price", "Quantity", "Unit", "Total"],
-                                table: Array.from(Array(5), (item, index)=>([
+                                headerBorder: true,
+                                tableBodyBorder: true,
+                                header: [
+                                {
+                                    title: "#", 
+                                    style: { 
+                                    width: 10 
+                                    } 
+                                }, 
+                                { 
+                                    title: "Title",
+                                    style: {
+                                    width: 30
+                                    } 
+                                }, 
+                                { 
+                                    title: "Description",
+                                    style: {
+                                    width: 80
+                                    } 
+                                }, 
+                                { title: "Price"},
+                                { title: "Quantity"},
+                                { title: "Unit"},
+                                { title: "Total"}
+                                ],
+                                table: Array.from(Array(15), (item, index)=>([
                                     index + 1,
                                     "There are many variations ",
-                                    "Lorem Ipsum is simply dummy text ",
+                                    "Lorem Ipsum is simply dummy text dummy text ",
                                     200.5,
                                     4.5,
                                     "m2",

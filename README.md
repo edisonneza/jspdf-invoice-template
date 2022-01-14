@@ -25,7 +25,7 @@ npm i jspdf-invoice-template
 Alternatively, load latest version from a CDN:<br/>
 <i>(Recommended to use a static version (not @latest) to prevent failure when updates are made)</i>
 ```html
-<script src="https://unpkg.com/jspdf-invoice-template@1.3.1/dist/index.js"></script>
+<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
 ```
 </details>
 <hr/>
@@ -75,6 +75,7 @@ var props = {
     returnJsPDFDocObject: true,
     fileName: "Invoice 2021",
     orientationLandscape: false,
+    compress: true,
     logo: {
         src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
         width: 53.33, //aspect ratio = width/height
@@ -123,7 +124,7 @@ var props = {
           { 
             title: "Description",
             style: {
-              width: 50
+              width: 80
             } 
           }, 
           { title: "Price"},
@@ -134,6 +135,7 @@ var props = {
         table: Array.from(Array(10), (item, index)=>([
             index + 1,
             "There are many variations ",
+            "Lorem Ipsum is simply dummy text dummy text ",
             200.5,
             4.5,
             "m2",

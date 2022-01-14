@@ -25,7 +25,7 @@ npm i jspdf-invoice-template
 Alternatively, load latest version from a CDN:<br/>
 <i>(Recommended to use a static version (not @latest) to prevent failure when updates are made)</i>
 ```html
-<script src="https://unpkg.com/jspdf-invoice-template@1.3.1/dist/index.js"></script>
+<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
 ```
 </details>
 <hr/>
@@ -75,6 +75,7 @@ var props = {
     returnJsPDFDocObject: true,
     fileName: "Invoice 2021",
     orientationLandscape: false,
+    compress: true,
     logo: {
         src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
         width: 53.33, //aspect ratio = width/height
@@ -107,10 +108,34 @@ var props = {
         invGenDate: "Invoice Date: 02/02/2021 10:17",
         headerBorder: false,
         tableBodyBorder: false,
-        header: ["#", "Description", "Price", "Quantity", "Unit", "Total"],
+        header: [
+          {
+            title: "#", 
+            style: { 
+              width: 10 
+            } 
+          }, 
+          { 
+            title: "Title",
+            style: {
+              width: 30
+            } 
+          }, 
+          { 
+            title: "Description",
+            style: {
+              width: 80
+            } 
+          }, 
+          { title: "Price"},
+          { title: "Quantity"},
+          { title: "Unit"},
+          { title: "Total"}
+        ],
         table: Array.from(Array(10), (item, index)=>([
             index + 1,
             "There are many variations ",
+            "Lorem Ipsum is simply dummy text dummy text ",
             200.5,
             4.5,
             "m2",
@@ -193,6 +218,18 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.4.0</summary>
+
+  * Added compress option
+  * Added custom column style (width) - (FYI: Width-> portrait: 210; landscape: 297)
+</details>
+
+<details>
+<summary>v.1.3.2</summary>
+
+  * Fixed package entry point
+</details>
+<details>
 <summary>v.1.3.1</summary>
 
   * Added feature to add or remove columns 

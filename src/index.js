@@ -357,7 +357,7 @@ function jsPDFInvoiceTemplate(props) {
 
   addTableHeader();
 
-  //table body
+  //#region TABLE BODY
   var tableBodyLength = param.invoice.table.length;
   param.invoice.table.forEach(function (row, index) {
     doc.line(10, currentHeight, docWidth - 10, currentHeight);
@@ -421,8 +421,8 @@ function jsPDFInvoiceTemplate(props) {
       doc.addPage();
       currentHeight = 10;
       if (index + 1 < tableBodyLength) addTableHeader();
-      //       else
-      //         currentHeight += pdfConfig.subLineHeight + 2 + pdfConfig.subLineHeight - 1; //same as in addtableHeader
+      //else
+      //currentHeight += pdfConfig.subLineHeight + 2 + pdfConfig.subLineHeight - 1; //same as in addtableHeader
     }
 
     //reset the height that was increased to check the next row
@@ -430,14 +430,15 @@ function jsPDFInvoiceTemplate(props) {
       // check if new page
       currentHeight -= maxHeight;
   });
-  //     doc.line(10, currentHeight, docWidth - 10, currentHeight); //nese duam te shfaqim line ne fund te tabeles
+  //doc.line(10, currentHeight, docWidth - 10, currentHeight); //if we want to show the last table line 
+  //#endregion
 
   var invDescSize = splitTextAndGetHeight(
     param.invoice.invDesc,
     docWidth / 2
   ).height;
-  //END TABLE PART
 
+  //#region PAGE BREAKER
   var checkAndAddPageLandscape = function () {
     if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
       doc.addPage();
@@ -451,6 +452,7 @@ function jsPDFInvoiceTemplate(props) {
       currentHeight = 10;
     }
   }
+  //#endregion
 
   checkAndAddPageNotLandscape();
   checkAndAddPageLandscape();
@@ -459,7 +461,7 @@ function jsPDFInvoiceTemplate(props) {
   doc.setFontSize(pdfConfig.labelTextSize);
   currentHeight += pdfConfig.lineHeight;
 
-  //line breaker before invoce total
+  //#region Line breaker before invoce total
   if (
     param.invoice.header.length &&
     (param.invoice.invTotal ||
@@ -469,13 +471,13 @@ function jsPDFInvoiceTemplate(props) {
     doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
     currentHeight += pdfConfig.lineHeight;
   }
+  //#endregion
 
-  //     doc.text("Faleminderit!", 10, currentHeight);
   doc.text(docWidth / 1.5, currentHeight, param.invoice.invTotalLabel, "right");
   doc.text(docWidth - 25, currentHeight, param.invoice.invTotal, "right");
   doc.text(docWidth - 10, currentHeight, param.invoice.invCurrency, "right");
 
-  //row1
+  //#region row1
   if (
     param.invoice.row1 &&
     (param.invoice.row1.col1 ||
@@ -489,9 +491,9 @@ function jsPDFInvoiceTemplate(props) {
     doc.text(docWidth - 25, currentHeight, param.invoice.row1.col2, "right");
     doc.text(docWidth - 10, currentHeight, param.invoice.row1.col3, "right");
   }
-  //end row1
+  //#endregion
 
-  //row2
+  //#region row2
   if (
     param.invoice.row2 &&
     (param.invoice.row2.col1 ||
@@ -505,7 +507,7 @@ function jsPDFInvoiceTemplate(props) {
     doc.text(docWidth - 25, currentHeight, param.invoice.row2.col2, "right");
     doc.text(docWidth - 10, currentHeight, param.invoice.row2.col3, "right");
   }
-  //end row2
+  //#endregion
 
   checkAndAddPageNotLandscape();
   checkAndAddPageLandscape();
@@ -516,7 +518,7 @@ function jsPDFInvoiceTemplate(props) {
   //   currentHeight += pdfConfig.subLineHeight;
   doc.setFontSize(pdfConfig.labelTextSize);
 
-  //add num of pages at the bottom
+  //#region Add num of pages at the bottom
   if (doc.getNumberOfPages() > 1) {
     for (let i = 1; i <= doc.getNumberOfPages(); i++) {
       doc.setFontSize(pdfConfig.fieldTextSize - 2);
@@ -536,7 +538,9 @@ function jsPDFInvoiceTemplate(props) {
       checkAndAddPageLandscape();
     }
   }
+  //#endregion
 
+  //#region INVOICE DESCRIPTION
   var addInvoiceDesc = () => {
     doc.setFontSize(pdfConfig.labelTextSize);
     doc.setTextColor(colorBlack);
@@ -557,8 +561,9 @@ function jsPDFInvoiceTemplate(props) {
     return currentHeight;
   };
   addInvoiceDesc();
+  //#endregion
 
-  //add num of page at the bottom
+  //#region Add num of first page at the bottom
   if (doc.getNumberOfPages() === 1 && param.pageEnable) {
     doc.setFontSize(pdfConfig.fieldTextSize - 2);
     doc.setTextColor(colorGray);
@@ -569,6 +574,7 @@ function jsPDFInvoiceTemplate(props) {
       doc.internal.pageSize.height - 6
     );
   }
+  //#endregion
 
   let returnObj = {
     pagesNumber: doc.getNumberOfPages(),

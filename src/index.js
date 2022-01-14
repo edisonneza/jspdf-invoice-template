@@ -438,15 +438,22 @@ function jsPDFInvoiceTemplate(props) {
   ).height;
   //END TABLE PART
 
-  if (param.orientationLandscape && currentHeight + invDescSize > 173) {
-    doc.addPage();
-    currentHeight = 10;
+  var checkAndAddPageLandscape = function () {
+    if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
+      doc.addPage();
+      currentHeight = 10;
+    }
   }
 
-  if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
-    doc.addPage();
-    currentHeight = 10;
+  var checkAndAddPageNotLandscape = function (heightLimit = 173) {
+    if (param.orientationLandscape && currentHeight + invDescSize > heightLimit) {
+      doc.addPage();
+      currentHeight = 10;
+    }
   }
+
+  checkAndAddPageNotLandscape();
+  checkAndAddPageLandscape();
 
   doc.setTextColor(colorBlack);
   doc.setFontSize(pdfConfig.labelTextSize);
@@ -500,15 +507,8 @@ function jsPDFInvoiceTemplate(props) {
   }
   //end row2
 
-  if (param.orientationLandscape && currentHeight + invDescSize > 173) {
-    doc.addPage();
-    currentHeight = 10;
-  }
-
-  if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
-    doc.addPage();
-    currentHeight = 10;
-  }
+  checkAndAddPageNotLandscape();
+  checkAndAddPageLandscape();
 
   doc.setTextColor(colorBlack);
   currentHeight += pdfConfig.subLineHeight;
@@ -532,15 +532,8 @@ function jsPDFInvoiceTemplate(props) {
         );
       }
 
-      if (param.orientationLandscape && currentHeight + invDescSize > 183) {
-        doc.addPage();
-        currentHeight = 10;
-      }
-
-      if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
-        doc.addPage();
-        currentHeight = 10;
-      }
+      checkAndAddPageNotLandscape(183);
+      checkAndAddPageLandscape();
     }
   }
 

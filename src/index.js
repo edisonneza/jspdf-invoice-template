@@ -284,22 +284,52 @@ function jsPDFInvoiceTemplate(props) {
   //10 margin left - 10 margin right
   var tdWidth = (doc.getPageWidth() - 20) / param.invoice.header.length;
 
-  var addTableHeaderBoarder = () => {
+  //#region TD WIDTH
+    if (param.invoice.header.length > 2) { //add style for 2 or more columns
+      const customColumnNo = param.invoice.header.map(x => x?.style?.width || 0).filter(x => x > 0);
+      let customWidthOfAllColumns = customColumnNo.reduce((a, b) => a + b, 0);
+      tdWidth = (doc.getPageWidth() - 20 - customWidthOfAllColumns) / (param.invoice.header.length - customColumnNo.length);
+    }
+  //#endregion
+
+  //#region TABLE HEADER BORDER
+  var addTableHeaderBorder = () => {
     currentHeight += 2;
+    const lineHeight = 7;
+    let startWidth = 0;
     for (let i = 0; i < param.invoice.header.length; i++) {
-      if (i === 0) doc.rect(10, currentHeight, tdWidth, 7);
-      else doc.rect(tdWidth * i + 10, currentHeight, tdWidth, 7);
+      const currentTdWidth = param.invoice.header[i]?.style?.width || tdWidth;
+      if (i === 0) doc.rect(10, currentHeight, currentTdWidth, lineHeight);
+      else {
+        const previousTdWidth = param.invoice.header[i - 1]?.style?.width || tdWidth;
+        const widthToUse = currentTdWidth == previousTdWidth ? currentTdWidth : previousTdWidth;
+        startWidth += widthToUse;
+        doc.rect(startWidth + 10, currentHeight, currentTdWidth, lineHeight);
+      }
     }
     currentHeight -= 2;
   };
-  var addTableBodyBoarder = (lineHeight) => {
+  //#endregion
+
+  //#region TABLE BODY BORDER
+  var addTableBodyBorder = (lineHeight) => {
+    let startWidth = 0;
     for (let i = 0; i < param.invoice.header.length; i++) {
-      if (i === 0) doc.rect(10, currentHeight, tdWidth, lineHeight);
-      else doc.rect(tdWidth * i + 10, currentHeight, tdWidth, lineHeight);
+      const currentTdWidth = param.invoice.header[i]?.style?.width || tdWidth;
+      if (i === 0) doc.rect(10, currentHeight, currentTdWidth, lineHeight);
+      else {
+        const previousTdWidth = param.invoice.header[i - 1]?.style?.width || tdWidth;
+        const widthToUse = currentTdWidth == previousTdWidth ? currentTdWidth : previousTdWidth;
+        startWidth += widthToUse;
+        doc.rect(startWidth + 10, currentHeight, currentTdWidth, lineHeight);
+      }
     }
   };
+  //#endregion
+
+  //#region TABLE HEADER
   var addTableHeader = () => {
-    if (param.invoice.headerBorder) addTableHeaderBoarder();
+    if (param.invoice.headerBorder) addTableHeaderBorder();
 
     currentHeight += pdfConfig.subLineHeight;
     doc.setTextColor(colorBlack);
@@ -308,14 +338,23 @@ function jsPDFInvoiceTemplate(props) {
     doc.setDrawColor(colorGray);
     currentHeight += 2;
 
+    let startWidth = 0;
     param.invoice.header.forEach(function (row, index) {
-      if (index == 0) doc.text(row, 11, currentHeight);
-      else doc.text(row, index * tdWidth + 11, currentHeight);
+      if (index == 0) doc.text(row.title, 11, currentHeight);
+      else {
+        const currentTdWidth = row?.style?.width || tdWidth;
+        const previousTdWidth = param.invoice.header[index - 1]?.style?.width || tdWidth;
+        const widthToUse = currentTdWidth == previousTdWidth ? currentTdWidth : previousTdWidth;
+        startWidth += widthToUse;
+        doc.text(row.title, startWidth + 11, currentHeight);
+      }
     });
 
     currentHeight += pdfConfig.subLineHeight - 1;
     doc.setTextColor(colorGray);
   };
+  //#endregion
+
   addTableHeader();
 
   //table body
@@ -324,27 +363,36 @@ function jsPDFInvoiceTemplate(props) {
     doc.line(10, currentHeight, docWidth - 10, currentHeight);
 
     //get nax height for the current row
-    let rowsHeight = [];
     var getRowsHeight = function () {
+      let rowsHeight = [];
       row.forEach(function (rr, index) {
-        //size should be the same used in other td
-        let item = splitTextAndGetHeight(rr.toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+        const widthToUse = param.invoice.header[index]?.style?.width || tdWidth;
+
+        let item = splitTextAndGetHeight(rr.toString(), widthToUse - 1); //minus 1, to fix the padding issue between borders
         rowsHeight.push(item.height);
       });
+
+      return rowsHeight;
     };
-    getRowsHeight();
-    var maxHeight = Math.max(...rowsHeight);
+    
+    var maxHeight = Math.max(...getRowsHeight());
 
     //body borders
-    if (param.invoice.tableBodyBorder) addTableBodyBoarder(maxHeight + 1);
+    if (param.invoice.tableBodyBorder) addTableBodyBorder(maxHeight + 1);
 
-    //display text into row cells
-    //Object.entries(row).forEach(function(col, index) {
+    let startWidth = 0;
     row.forEach(function (rr, index) {
-      let item = splitTextAndGetHeight(rr.toString(), tdWidth - 1); //minus 1, to fix the padding issue between borders
+      const widthToUse = param.invoice.header[index]?.style?.width || tdWidth;
+      let item = splitTextAndGetHeight(rr.toString(), widthToUse - 1); //minus 1, to fix the padding issue between borders
 
       if (index == 0) doc.text(item.text, 11, currentHeight + 4);
-      else doc.text(item.text, 11 + index * tdWidth, currentHeight + 4);
+      else {
+        const currentTdWidth = rr?.style?.width || tdWidth;
+        const previousTdWidth = param.invoice.header[index - 1]?.style?.width || tdWidth;
+        const widthToUse = currentTdWidth == previousTdWidth ? currentTdWidth : previousTdWidth;
+        startWidth += widthToUse;
+        doc.text(item.text, 11 + startWidth, currentHeight + 4);
+      }
     });
 
     currentHeight += maxHeight - 4;

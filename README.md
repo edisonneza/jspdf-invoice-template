@@ -107,7 +107,30 @@ var props = {
         invGenDate: "Invoice Date: 02/02/2021 10:17",
         headerBorder: false,
         tableBodyBorder: false,
-        header: ["#", "Description", "Price", "Quantity", "Unit", "Total"],
+        header: [
+          {
+            title: "#", 
+            style: { 
+              width: 10 
+            } 
+          }, 
+          { 
+            title: "Title",
+            style: {
+              width: 30
+            } 
+          }, 
+          { 
+            title: "Description",
+            style: {
+              width: 50
+            } 
+          }, 
+          { title: "Price"},
+          { title: "Quantity"},
+          { title: "Unit"},
+          { title: "Total"}
+        ],
         table: Array.from(Array(10), (item, index)=>([
             index + 1,
             "There are many variations ",
@@ -193,6 +216,13 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.4.0</summary>
+
+  * Added compress option
+  * Added custom column style (width) - (FYI: Width-> portrait: 210; landscape: 297)
+</details>
+
+<details>
 <summary>v.1.3.2</summary>
 
   * Fixed package entry point

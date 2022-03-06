@@ -8,7 +8,7 @@ module.exports = {
     filename: 'index.js',
     library: "jsPDFInvoiceTemplate",
     libraryTarget: 'umd',
-    globalObject: 'this',
+    globalObject: 'global',
     publicPath: ''
   },
   module: {

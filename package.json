@@ -1,6 +1,6 @@
 {
   "name": "jspdf-invoice-template",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "PDF template created for invoice with optional parameters. Using jsPDF library.",
   "main": "./dist/index.js",
   "scripts": {

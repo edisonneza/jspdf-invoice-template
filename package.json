@@ -1,6 +1,6 @@
 {
   "name": "jspdf-invoice-template-nodejs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "PDF template created for invoice with optional parameters (for NodeJs). Using jsPDF library.",
   "main": "./dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edisonneza/jspdf-invoice-template.git"
+    "url": "git+https://github.com/edisonneza/jspdf-invoice-template/tree/nodejs"
   },
   "keywords": [
     "jspdf-template",

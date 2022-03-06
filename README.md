@@ -1,14 +1,19 @@
 # PDF Invoice Template
-PDF template created to generate invoices based on props object. Using `jsPDF` library. ( `jsPDF` is exported also, so it can be used without importing jsPDF separately. )
+To fix Angular v13 and some NodeJs issues, I've separated into two different npm packages, as below:
 
-Creating PDF from scratch is a nightmare (at least for me). In some project we need to use js for generating various PDF, and mostly they are invoices PDF files. This project I've created for personal use but being here why not to share with others? 
+[For web browsers](https://www.npmjs.com/package/jspdf-invoice-template):    <i>npm i jspdf-invoice-template</i>
+
+[For NodeJs](https://www.npmjs.com/package/jspdf-invoice-template-nodejs):    <i>npm i jspdf-invoice-template-nodejs</i>
+
+
+PDF template created to generate invoices based on props object. Using `jsPDF` library. ( `jsPDF` is exported also, so it can be used without importing jsPDF separately. )
 
 All this code works by using an object as parameter for the function. <br/>
 From <i><b>v1.3.1</b></i> all properties are optional and you can add them as empty string or just remove them from the prop object, if you want to display nothing. Also it can be used in different languages because all labels (and all text) can be set in the props object.
 
 <h4><b><i>Feel free for any suggestion or improvements.</i></b></h4>
 
-## [Demo site](https://edisonneza.github.io/jspdf-invoice-template) | [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/) | [Npm](https://www.npmjs.com/package/jspdf-invoice-template) 
+## [Demo site](https://edisonneza.github.io/jspdf-invoice-template) | [Demo images](#demo-images) | [jsPDF Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/) | [Npm](https://www.npmjs.com/package/jspdf-invoice-template) | [Npm NodeJs](https://www.npmjs.com/package/jspdf-invoice-template-nodejs) 
 <br/>
 
 # Install and usage
@@ -20,6 +25,10 @@ Get it from NPM:
 
 ```sh
 npm i jspdf-invoice-template
+```
+Or for NodeJs:
+```sh
+npm i jspdf-invoice-template-nodejs
 ```
 
 Alternatively, load latest version from a CDN:<br/>

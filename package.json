@@ -2,9 +2,15 @@
   "name": "jspdf-invoice-template-nodejs",
   "version": "1.0.3",
   "description": "PDF template created for invoice with optional parameters (for NodeJs). Using jsPDF library.",
-  "main": "./dist/index.js",
+  "main": "dist/jspdf.node.min.js",
+  "module": "dist/jspdf.es.min.js",
+  "browser": "dist/jspdf.es.min.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "rollup --config rollup.config.js",
+    "watch": "rollup -c -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },
@@ -34,9 +40,22 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-optional-chaining": "^7.13.12",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/runtime": "^7.17.7",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-replace": "^4.0.0",
     "babel-loader": "^8.2.2",
-    "typescript": "^4.1.5",
-    "webpack": "^5.21.2",
-    "webpack-cli": "^4.9.1"
-  }
+    "rollup": "^2.18.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-preprocess": "^0.0.4",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-terser": "^6.1.0",
+    "typescript": "^4.1.5"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "IE 11"
+  ]
 }

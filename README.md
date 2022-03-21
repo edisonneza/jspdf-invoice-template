@@ -228,6 +228,13 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.4.2</summary>
+
+  * Separated Nodejs and Web based, into two packages
+  * Fixed Image and Blob type (for Nodejs)
+</details>
+
+<details>
 <summary>v.1.4.0</summary>
 
   * Added compress option

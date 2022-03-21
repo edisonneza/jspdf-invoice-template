@@ -1,12 +1,12 @@
 import { jsPDF } from "jspdf";
 
 const OutputType = {
-  Save: "save", //save pdf as a file
+  // Save: "save", //save pdf as a file
   DataUriString: "datauristring", //returns the data uri string
-  DataUri: "datauri", //opens the data uri in current window
-  DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
-  Blob: "blob", //return blob format of the doc,
-  ArrayBuffer: "arraybuffer", //return ArrayBuffer format
+  // DataUri: "datauri", //opens the data uri in current window
+  // DataUrlNewWindow: "dataurlnewwindow", //opens the data uri in new window
+  // Blob: "blob", //return blob format of the doc,
+  // ArrayBuffer: "arraybuffer", //return ArrayBuffer format
 };
 
 export { OutputType, jsPDF };
@@ -21,6 +21,7 @@ export { OutputType, jsPDF };
  *  compress?: boolean,
  *  logo?: {
  *      src?: string,
+ *      type?: string,
  *      width?: number,
  *      height?: number,
  *      margin?: {
@@ -51,7 +52,11 @@ export { OutputType, jsPDF };
  *       invGenDate?: string,
  *       headerBorder?: boolean,
  *       tableBodyBorder?: boolean,
- *       header?: string[],
+ *       header?: 
+ *        {
+ *          title: string, 
+ *          style?: { width?: number }
+ *        }[],
  *       table?: any,
  *       invTotalLabel?: string,
  *       invTotal?: string,
@@ -90,6 +95,7 @@ function jsPDFInvoiceTemplate(props) {
     compress: props.compress || false,
     logo: {
       src: props.logo?.src || "",
+      type: props.logo?.type || "",
       width: props.logo?.width || "",
       height: props.logo?.height || "",
       margin: {
@@ -193,16 +199,31 @@ function jsPDFInvoiceTemplate(props) {
   doc.setFontSize(pdfConfig.fieldTextSize);
 
   if (param.logo.src) {
-    var imageHeader = new Image();
-    imageHeader.src = param.logo.src;
+    var imageHeader = '';
+    if(typeof window === "undefined"){
+      imageHeader = param.logo.src;
+    } else {
+      imageHeader = new Image();
+      imageHeader.src = param.logo.src;
+    }
     //doc.text(htmlDoc.sessionDateText, docWidth - (doc.getTextWidth(htmlDoc.sessionDateText) + 10), currentHeight);
-    doc.addImage(
-      imageHeader,
-      10 + param.logo.margin.left,
-      currentHeight - 5 + param.logo.margin.top,
-      param.logo.width,
-      param.logo.height
-    );
+    if (param.logo.type)
+      doc.addImage(
+        imageHeader,
+        param.logo.type,
+        10 + param.logo.margin.left,
+        currentHeight - 5 + param.logo.margin.top,
+        param.logo.width,
+        param.logo.height
+      );
+    else 
+      doc.addImage(
+        imageHeader,
+        10 + param.logo.margin.left,
+        currentHeight - 5 + param.logo.margin.top,
+        param.logo.width,
+        param.logo.height
+      );
   }
 
   doc.setTextColor(colorGray);

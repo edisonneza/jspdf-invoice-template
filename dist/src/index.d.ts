@@ -1,11 +1,6 @@
 export default jsPDFInvoiceTemplate;
 export namespace OutputType {
-    const Save: string;
     const DataUriString: string;
-    const DataUri: string;
-    const DataUrlNewWindow: string;
-    const Blob: string;
-    const ArrayBuffer: string;
 }
 import { jsPDF } from "jspdf";
 /**
@@ -15,8 +10,10 @@ import { jsPDF } from "jspdf";
  *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
  *  orientationLandscape?: boolean,
+ *  compress?: boolean,
  *  logo?: {
  *      src?: string,
+ *      type?: string,
  *      width?: number,
  *      height?: number,
  *      margin?: {
@@ -42,14 +39,18 @@ import { jsPDF } from "jspdf";
  *   },
  *   invoice?: {
  *       label?: string,
- *       invTotalLabel?: string,
  *       num?: number,
  *       invDate?: string,
  *       invGenDate?: string,
  *       headerBorder?: boolean,
  *       tableBodyBorder?: boolean,
- *       header?: string[],
+ *       header?:
+ *        {
+ *          title: string,
+ *          style?: { width?: number }
+ *        }[],
  *       table?: any,
+ *       invTotalLabel?: string,
  *       invTotal?: string,
  *       invCurrency?: string,
  *       invDescLabel?: string,
@@ -79,18 +80,15 @@ import { jsPDF } from "jspdf";
  */
 declare function jsPDFInvoiceTemplate(props: {
     outputType: {
-        Save: string;
         DataUriString: string;
-        DataUri: string;
-        DataUrlNewWindow: string;
-        Blob: string;
-        ArrayBuffer: string;
     } | string;
     returnJsPDFDocObject?: boolean;
     fileName: string;
     orientationLandscape?: boolean;
+    compress?: boolean;
     logo?: {
         src?: string;
+        type?: string;
         width?: number;
         height?: number;
         margin?: {
@@ -116,14 +114,19 @@ declare function jsPDFInvoiceTemplate(props: {
     };
     invoice?: {
         label?: string;
-        invTotalLabel?: string;
         num?: number;
         invDate?: string;
         invGenDate?: string;
         headerBorder?: boolean;
         tableBodyBorder?: boolean;
-        header?: string[];
+        header?: {
+            title: string;
+            style?: {
+                width?: number;
+            };
+        }[];
         table?: any;
+        invTotalLabel?: string;
         invTotal?: string;
         invCurrency?: string;
         invDescLabel?: string;

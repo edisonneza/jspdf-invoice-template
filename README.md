@@ -87,6 +87,7 @@ var props = {
     compress: true,
     logo: {
         src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+        type: 'PNG', //optional, when src= data:uri (nodejs case)
         width: 53.33, //aspect ratio = width/height
         height: 26.66,
         margin: {
@@ -266,6 +267,14 @@ Landscape:
 
 
 ## 👋
+
+
+### Development - Generate types
+```
+npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir dist/src/
+
+npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly 
+```
 
 Copyright
 (c) 2021 Edison Neza, https://github.com/edisonneza/jspdf-invoice-template

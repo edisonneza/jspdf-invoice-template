@@ -15,8 +15,10 @@ import { jsPDF } from "jspdf";
  *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
  *  orientationLandscape?: boolean,
+ *  compress?: boolean,
  *  logo?: {
  *      src?: string,
+ *      type?: string,
  *      width?: number,
  *      height?: number,
  *      margin?: {
@@ -42,14 +44,18 @@ import { jsPDF } from "jspdf";
  *   },
  *   invoice?: {
  *       label?: string,
- *       invTotalLabel?: string,
  *       num?: number,
  *       invDate?: string,
  *       invGenDate?: string,
  *       headerBorder?: boolean,
  *       tableBodyBorder?: boolean,
- *       header?: string[],
+ *       header?:
+ *        {
+ *          title: string,
+ *          style?: { width?: number }
+ *        }[],
  *       table?: any,
+ *       invTotalLabel?: string,
  *       invTotal?: string,
  *       invCurrency?: string,
  *       invDescLabel?: string,
@@ -89,8 +95,10 @@ declare function jsPDFInvoiceTemplate(props: {
     returnJsPDFDocObject?: boolean;
     fileName: string;
     orientationLandscape?: boolean;
+    compress?: boolean;
     logo?: {
         src?: string;
+        type?: string;
         width?: number;
         height?: number;
         margin?: {
@@ -116,14 +124,19 @@ declare function jsPDFInvoiceTemplate(props: {
     };
     invoice?: {
         label?: string;
-        invTotalLabel?: string;
         num?: number;
         invDate?: string;
         invGenDate?: string;
         headerBorder?: boolean;
         tableBodyBorder?: boolean;
-        header?: string[];
+        header?: {
+            title: string;
+            style?: {
+                width?: number;
+            };
+        }[];
         table?: any;
+        invTotalLabel?: string;
         invTotal?: string;
         invCurrency?: string;
         invDescLabel?: string;

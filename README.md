@@ -1,6 +1,5 @@
 # PDF Invoice Template
 
-#### [Buy me a coffe ☕](https://www.buymeacoffee.com/eneza)
 
 To fix Angular v13 and some NodeJs issues, I've separated into two different npm packages, as below:
 

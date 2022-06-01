@@ -63,22 +63,14 @@ export { OutputType, jsPDF };
  *       invCurrency?: string,
  *       invDescLabel?: string,
  *       invDesc?: string,
- *       row1?: {
+ *       additionalRows?: [{
  *           col1?: string,
  *           col2?: string,
  *           col3?: string,
  *           style?: {
  *               fontSize?: number
  *           }
- *       },
- *       row2?: {
- *           col1?: string,
- *           col2?: string,
- *           col3?: string,
- *           style?: {
- *               fontSize?: number
- *           }
- *       },
+ *       }],
  *   },
  *   footer?: {
  *       text?: string,
@@ -133,22 +125,16 @@ function jsPDFInvoiceTemplate(props) {
       invCurrency: props.invoice?.invCurrency || "",
       invDescLabel: props.invoice?.invDescLabel || "",
       invDesc: props.invoice?.invDesc || "",
-      row1: {
-        col1: props.invoice?.row1?.col1 || "",
-        col2: props.invoice?.row1?.col2 || "",
-        col3: props.invoice?.row1?.col3 || "",
-        style: {
-          fontSize: props.invoice?.row1?.style?.fontSize || 12,
-        },
-      },
-      row2: {
-        col1: props.invoice?.row2?.col1 || "",
-        col2: props.invoice?.row2?.col2 || "",
-        col3: props.invoice?.row2?.col3 || "",
-        style: {
-          fontSize: props.invoice?.row2?.style?.fontSize || 12,
-        },
-      },
+      additionalRows: props.invoice?.additionalRows?.map(x => {
+        return {
+          col1: x?.col1 || "",
+          col2: x?.col2 || "",
+          col3: x?.col3 || "",
+          style: {
+            fontSize: x?.style?.fontSize || 12,
+          }
+        }
+      })
     },
     footer: {
       text: props.footer?.text || "",
@@ -217,7 +203,7 @@ function jsPDFInvoiceTemplate(props) {
         param.logo.height
       );
     else 
-      doc.addImage(
+        doc.addImage(
         imageHeader,
         10 + param.logo.margin.left,
         currentHeight - 5 + param.logo.margin.top,
@@ -306,11 +292,11 @@ function jsPDFInvoiceTemplate(props) {
   var tdWidth = (doc.getPageWidth() - 20) / param.invoice.header.length;
 
   //#region TD WIDTH
-    if (param.invoice.header.length > 2) { //add style for 2 or more columns
-      const customColumnNo = param.invoice.header.map(x => x?.style?.width || 0).filter(x => x > 0);
-      let customWidthOfAllColumns = customColumnNo.reduce((a, b) => a + b, 0);
-      tdWidth = (doc.getPageWidth() - 20 - customWidthOfAllColumns) / (param.invoice.header.length - customColumnNo.length);
-    }
+  if (param.invoice.header.length > 2) { //add style for 2 or more columns
+    const customColumnNo = param.invoice.header.map(x => x?.style?.width || 0).filter(x => x > 0);
+    let customWidthOfAllColumns = customColumnNo.reduce((a, b) => a + b, 0);
+    tdWidth = (doc.getPageWidth() - 20 - customWidthOfAllColumns) / (param.invoice.header.length - customColumnNo.length);
+  }
   //#endregion
 
   //#region TABLE HEADER BORDER
@@ -395,7 +381,7 @@ function jsPDFInvoiceTemplate(props) {
 
       return rowsHeight;
     };
-    
+
     var maxHeight = Math.max(...getRowsHeight());
 
     //body borders
@@ -473,10 +459,13 @@ function jsPDFInvoiceTemplate(props) {
       currentHeight = 10;
     }
   }
+  var checkAndAddPage = function () {
+    checkAndAddPageNotLandscape();
+    checkAndAddPageLandscape();
+  }
   //#endregion
 
-  checkAndAddPageNotLandscape();
-  checkAndAddPageLandscape();
+  checkAndAddPage();
 
   doc.setTextColor(colorBlack);
   doc.setFontSize(pdfConfig.labelTextSize);
@@ -498,40 +487,21 @@ function jsPDFInvoiceTemplate(props) {
   doc.text(docWidth - 25, currentHeight, param.invoice.invTotal, "right");
   doc.text(docWidth - 10, currentHeight, param.invoice.invCurrency, "right");
 
-  //#region row1
-  if (
-    param.invoice.row1 &&
-    (param.invoice.row1.col1 ||
-      param.invoice.row1.col2 ||
-      param.invoice.row1.col3)
-  ) {
-    currentHeight += pdfConfig.lineHeight;
-    doc.setFontSize(param.invoice.row1.style.fontSize);
+  //#region additionalRows
+  if (param.invoice.additionalRows?.length > 0) {
+    for (let i = 0; i < param.invoice.additionalRows.length; i++) {
+      currentHeight += pdfConfig.lineHeight;
+      doc.setFontSize(param.invoice.additionalRows[i].style.fontSize);
 
-    doc.text(docWidth / 1.5, currentHeight, param.invoice.row1.col1, "right");
-    doc.text(docWidth - 25, currentHeight, param.invoice.row1.col2, "right");
-    doc.text(docWidth - 10, currentHeight, param.invoice.row1.col3, "right");
+      doc.text(docWidth / 1.5, currentHeight, param.invoice.additionalRows[i].col1, "right");
+      doc.text(docWidth - 25, currentHeight, param.invoice.additionalRows[i].col2, "right");
+      doc.text(docWidth - 10, currentHeight, param.invoice.additionalRows[i].col3, "right");
+      checkAndAddPage();
+    }
   }
   //#endregion
 
-  //#region row2
-  if (
-    param.invoice.row2 &&
-    (param.invoice.row2.col1 ||
-      param.invoice.row2.col2 ||
-      param.invoice.row2.col3)
-  ) {
-    currentHeight += pdfConfig.lineHeight;
-    doc.setFontSize(param.invoice.row2.style.fontSize);
-
-    doc.text(docWidth / 1.5, currentHeight, param.invoice.row2.col1, "right");
-    doc.text(docWidth - 25, currentHeight, param.invoice.row2.col2, "right");
-    doc.text(docWidth - 10, currentHeight, param.invoice.row2.col3, "right");
-  }
-  //#endregion
-
-  checkAndAddPageNotLandscape();
-  checkAndAddPageLandscape();
+  checkAndAddPage();
 
   doc.setTextColor(colorBlack);
   currentHeight += pdfConfig.subLineHeight;

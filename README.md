@@ -154,7 +154,7 @@ var props = {
         invTotalLabel: "Total:",
         invTotal: "145,250.50",
         invCurrency: "ALL",
-        row1: {
+        additionalRows: [{
             col1: 'VAT:',
             col2: '20',
             col3: '%',
@@ -162,14 +162,14 @@ var props = {
                 fontSize: 10 //optional, default 12
             }
         },
-        row2: {
+        {
             col1: 'SubTotal:',
             col2: '116,199.90',
             col3: 'ALL',
             style: {
                 fontSize: 10 //optional, default 12
             }
-        },
+        }],
         invDescLabel: "Invoice Note",
         invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
     },

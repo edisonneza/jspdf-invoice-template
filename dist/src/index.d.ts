@@ -60,22 +60,14 @@ import { jsPDF } from "jspdf";
  *       invCurrency?: string,
  *       invDescLabel?: string,
  *       invDesc?: string,
- *       row1?: {
+ *       additionalRows?: [{
  *           col1?: string,
  *           col2?: string,
  *           col3?: string,
  *           style?: {
  *               fontSize?: number
  *           }
- *       },
- *       row2?: {
- *           col1?: string,
- *           col2?: string,
- *           col3?: string,
- *           style?: {
- *               fontSize?: number
- *           }
- *       },
+ *       }],
  *   },
  *   footer?: {
  *       text?: string,
@@ -141,22 +133,16 @@ declare function jsPDFInvoiceTemplate(props: {
         invCurrency?: string;
         invDescLabel?: string;
         invDesc?: string;
-        row1?: {
-            col1?: string;
-            col2?: string;
-            col3?: string;
-            style?: {
-                fontSize?: number;
-            };
-        };
-        row2?: {
-            col1?: string;
-            col2?: string;
-            col3?: string;
-            style?: {
-                fontSize?: number;
-            };
-        };
+        additionalRows?: [
+            {
+                col1?: string;
+                col2?: string;
+                col3?: string;
+                style?: {
+                    fontSize?: number;
+                };
+            }
+        ];
     };
     footer?: {
         text?: string;

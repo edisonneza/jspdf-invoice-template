@@ -29,6 +29,17 @@ export { OutputType, jsPDF };
  *        left?: number
  *      }
  *   },
+ *  stamp?: {
+ *      inAllPages?: boolean,
+ *      src?: string,
+ *      type?: string,
+ *      width?: number,
+ *      height?: number,
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
+ *      }
+ *   },
  *   business?: {
  *       name?: string,
  *       address?: string,
@@ -93,6 +104,16 @@ function jsPDFInvoiceTemplate(props) {
       margin: {
         top: props.logo?.margin?.top || 0,
         left: props.logo?.margin?.left || 0,
+      },
+    },
+    stamp: {
+      inAllPages: props.stamp?.inAllPages || false,
+      src: props.stamp?.src || "",
+      width: props.stamp?.width || "",
+      height: props.stamp?.height || "",
+      margin: {
+        top: props.stamp?.margin?.top || 0,
+        left: props.stamp?.margin?.left || 0,
       },
     },
     business: {
@@ -186,7 +207,7 @@ function jsPDFInvoiceTemplate(props) {
 
   if (param.logo.src) {
     var imageHeader = '';
-    if(typeof window === "undefined"){
+    if (typeof window === "undefined") {
       imageHeader = param.logo.src;
     } else {
       imageHeader = new Image();
@@ -202,8 +223,8 @@ function jsPDFInvoiceTemplate(props) {
         param.logo.width,
         param.logo.height
       );
-    else 
-        doc.addImage(
+    else
+      doc.addImage(
         imageHeader,
         10 + param.logo.margin.left,
         currentHeight - 5 + param.logo.margin.top,
@@ -465,6 +486,45 @@ function jsPDFInvoiceTemplate(props) {
   }
   //#endregion
 
+  //#region Stamp
+  var addStamp = () => {
+    let _addStampBase = () => {
+      var stampImage = '';
+      if (typeof window === "undefined") {
+        stampImage = param.stamp.src;
+      } else {
+        stampImage = new Image();
+        stampImage.src = param.stamp.src;
+      }
+
+      if (param.stamp.type)
+        doc.addImage(
+          stampImage,
+          param.stamp.type,
+          10 + param.stamp.margin.left,
+          docHeight - 22 + param.stamp.margin.top,
+          param.stamp.width,
+          param.stamp.height
+        );
+      else
+        doc.addImage(
+          stampImage,
+          10 + param.stamp.margin.left,
+          docHeight - 22 + param.stamp.margin.top,
+          param.stamp.width,
+          param.stamp.height
+        );
+    };
+
+    if (param.stamp.src) {
+      if (param.stamp.inAllPages)
+        _addStampBase();
+      else if (!param.stamp.inAllPages && doc.getCurrentPageInfo().pageNumber == doc.getNumberOfPages())
+        _addStampBase();
+    }
+  }
+  //#endregion
+
   checkAndAddPage();
 
   doc.setTextColor(colorBlack);
@@ -482,10 +542,6 @@ function jsPDFInvoiceTemplate(props) {
     currentHeight += pdfConfig.lineHeight;
   }
   //#endregion
-
-  doc.text(docWidth / 1.5, currentHeight, param.invoice.invTotalLabel, "right");
-  doc.text(docWidth - 25, currentHeight, param.invoice.invTotal, "right");
-  doc.text(docWidth - 10, currentHeight, param.invoice.invCurrency, "right");
 
   //#region additionalRows
   if (param.invoice.additionalRows?.length > 0) {
@@ -527,6 +583,7 @@ function jsPDFInvoiceTemplate(props) {
 
       checkAndAddPageNotLandscape(183);
       checkAndAddPageLandscape();
+      addStamp();
     }
   }
   //#endregion
@@ -553,6 +610,8 @@ function jsPDFInvoiceTemplate(props) {
   };
   addInvoiceDesc();
   //#endregion
+
+  addStamp();
 
   //#region Add num of first page at the bottom
   if (doc.getNumberOfPages() === 1 && param.pageEnable) {

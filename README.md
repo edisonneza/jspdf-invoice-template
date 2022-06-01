@@ -95,6 +95,17 @@ var props = {
             left: 0 //negative or positive num, from the current position
         }
     },
+    stamp: {
+        inAllPages: true, //by default just in the last page
+        src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+        type: 'JPG', //optional, when src= data:uri (nodejs case)
+        width: 20, //aspect ratio = width/height
+        height: 20,
+        margin: {
+            top: 0, //negative or positive num, from the current position
+            left: 0 //negative or positive num, from the current position
+        }
+    },
     business: {
         name: "Business Name",
         address: "Albania, Tirane ish-Dogana, Durres 2001",

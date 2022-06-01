@@ -26,6 +26,17 @@ import { jsPDF } from "jspdf";
  *        left?: number
  *      }
  *   },
+ *  stamp?: {
+ *      inAllPages?: boolean,
+ *      src?: string,
+ *      type?: string,
+ *      width?: number,
+ *      height?: number,
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
+ *      }
+ *   },
  *   business?: {
  *       name?: string,
  *       address?: string,
@@ -89,6 +100,17 @@ declare function jsPDFInvoiceTemplate(props: {
     orientationLandscape?: boolean;
     compress?: boolean;
     logo?: {
+        src?: string;
+        type?: string;
+        width?: number;
+        height?: number;
+        margin?: {
+            top?: number;
+            left?: number;
+        };
+    };
+    stamp?: {
+        inAllPages?: boolean;
         src?: string;
         type?: string;
         width?: number;

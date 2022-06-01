@@ -21,6 +21,17 @@ import { jsPDF } from "jspdf";
  *        left?: number
  *      }
  *   },
+ *  stamp?: {
+ *      inAllPages?: boolean,
+ *      src?: string,
+ *      type?: string,
+ *      width?: number,
+ *      height?: number,
+ *      margin?: {
+ *        top?: number,
+ *        left?: number
+ *      }
+ *   },
  *   business?: {
  *       name?: string,
  *       address?: string,
@@ -50,27 +61,16 @@ import { jsPDF } from "jspdf";
  *          style?: { width?: number }
  *        }[],
  *       table?: any,
- *       invTotalLabel?: string,
- *       invTotal?: string,
- *       invCurrency?: string,
  *       invDescLabel?: string,
  *       invDesc?: string,
- *       row1?: {
+ *       additionalRows?: [{
  *           col1?: string,
  *           col2?: string,
  *           col3?: string,
  *           style?: {
  *               fontSize?: number
  *           }
- *       },
- *       row2?: {
- *           col1?: string,
- *           col2?: string,
- *           col3?: string,
- *           style?: {
- *               fontSize?: number
- *           }
- *       },
+ *       }],
  *   },
  *   footer?: {
  *       text?: string,
@@ -87,6 +87,17 @@ declare function jsPDFInvoiceTemplate(props: {
     orientationLandscape?: boolean;
     compress?: boolean;
     logo?: {
+        src?: string;
+        type?: string;
+        width?: number;
+        height?: number;
+        margin?: {
+            top?: number;
+            left?: number;
+        };
+    };
+    stamp?: {
+        inAllPages?: boolean;
         src?: string;
         type?: string;
         width?: number;
@@ -126,27 +137,18 @@ declare function jsPDFInvoiceTemplate(props: {
             };
         }[];
         table?: any;
-        invTotalLabel?: string;
-        invTotal?: string;
-        invCurrency?: string;
         invDescLabel?: string;
         invDesc?: string;
-        row1?: {
-            col1?: string;
-            col2?: string;
-            col3?: string;
-            style?: {
-                fontSize?: number;
-            };
-        };
-        row2?: {
-            col1?: string;
-            col2?: string;
-            col3?: string;
-            style?: {
-                fontSize?: number;
-            };
-        };
+        additionalRows?: [
+            {
+                col1?: string;
+                col2?: string;
+                col3?: string;
+                style?: {
+                    fontSize?: number;
+                };
+            }
+        ];
     };
     footer?: {
         text?: string;

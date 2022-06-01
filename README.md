@@ -1,4 +1,6 @@
 # PDF Invoice Template
+
+
 To fix Angular v13 and some NodeJs issues, I've separated into two different npm packages, as below:
 
 [For web browsers](https://www.npmjs.com/package/jspdf-invoice-template):    <i>npm i jspdf-invoice-template</i>
@@ -34,7 +36,7 @@ npm i jspdf-invoice-template-nodejs
 Alternatively, load latest version from a CDN:<br/>
 <i>(Recommended to use a static version (not @latest) to prevent failure when updates are made)</i>
 ```html
-<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
+<script src="https://unpkg.com/jspdf-invoice-template@1.4.3/dist/index.js"></script>
 ```
 </details>
 <hr/>
@@ -90,6 +92,17 @@ var props = {
         type: 'PNG', //optional, when src= data:uri (nodejs case)
         width: 53.33, //aspect ratio = width/height
         height: 26.66,
+        margin: {
+            top: 0, //negative or positive num, from the current position
+            left: 0 //negative or positive num, from the current position
+        }
+    },
+    stamp: {
+        inAllPages: true, //by default = false, just in the last page
+        src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+        type: 'JPG', //optional, when src= data:uri (nodejs case)
+        width: 20, //aspect ratio = width/height
+        height: 20,
         margin: {
             top: 0, //negative or positive num, from the current position
             left: 0 //negative or positive num, from the current position
@@ -151,10 +164,15 @@ var props = {
             "m2",
             400.5
         ])),
-        invTotalLabel: "Total:",
-        invTotal: "145,250.50",
-        invCurrency: "ALL",
-        row1: {
+        additionalRows: [{
+            col1: 'Total:',
+            col2: '145,250.50',
+            col3: 'ALL',
+            style: {
+                fontSize: 14 //optional, default 12
+            }
+        },
+        {
             col1: 'VAT:',
             col2: '20',
             col3: '%',
@@ -162,14 +180,14 @@ var props = {
                 fontSize: 10 //optional, default 12
             }
         },
-        row2: {
+        {
             col1: 'SubTotal:',
             col2: '116,199.90',
             col3: 'ALL',
             style: {
                 fontSize: 10 //optional, default 12
             }
-        },
+        }],
         invDescLabel: "Invoice Note",
         invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
     },
@@ -228,6 +246,13 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.4.3</summary>
+
+  * Dynamic rows at the end of the table (total, vat, subtotal etc)
+  * Added stamp image at the left bottom of the page (image as a qr code)
+</details>
+
+<details>
 <summary>v.1.4.2</summary>
 
   * Separated Nodejs and Web based, into two packages

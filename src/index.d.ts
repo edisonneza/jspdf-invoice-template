@@ -66,9 +66,6 @@ import { jsPDF } from "jspdf";
  *          style?: { width?: number }
  *        }[],
  *       table?: any,
- *       invTotalLabel?: string,
- *       invTotal?: string,
- *       invCurrency?: string,
  *       invDescLabel?: string,
  *       invDesc?: string,
  *       additionalRows?: [{
@@ -150,9 +147,6 @@ declare function jsPDFInvoiceTemplate(props: {
             };
         }[];
         table?: any;
-        invTotalLabel?: string;
-        invTotal?: string;
-        invCurrency?: string;
         invDescLabel?: string;
         invDesc?: string;
         additionalRows?: [

@@ -96,7 +96,7 @@ var props = {
         }
     },
     stamp: {
-        inAllPages: true, //by default just in the last page
+        inAllPages: true, //by default = false, just in the last page
         src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
         type: 'JPG', //optional, when src= data:uri (nodejs case)
         width: 20, //aspect ratio = width/height
@@ -162,10 +162,15 @@ var props = {
             "m2",
             400.5
         ])),
-        invTotalLabel: "Total:",
-        invTotal: "145,250.50",
-        invCurrency: "ALL",
         additionalRows: [{
+            col1: 'Total:',
+            col2: '145,250.50',
+            col3: 'ALL',
+            style: {
+                fontSize: 14 //optional, default 12
+            }
+        },
+        {
             col1: 'VAT:',
             col2: '20',
             col3: '%',
@@ -239,6 +244,13 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.4.3</summary>
+
+  * Dynamic rows at the end of the table (total, vat, subtotal etc)
+  * Added stamp image at the left bottom of the page (image as a qr code)
+</details>
+
+<details>
 <summary>v.1.4.2</summary>
 
   * Separated Nodejs and Web based, into two packages

@@ -69,9 +69,6 @@ export { OutputType, jsPDF };
  *          style?: { width?: number }
  *        }[],
  *       table?: any,
- *       invTotalLabel?: string,
- *       invTotal?: string,
- *       invCurrency?: string,
  *       invDescLabel?: string,
  *       invDesc?: string,
  *       additionalRows?: [{
@@ -134,7 +131,6 @@ function jsPDFInvoiceTemplate(props) {
     },
     invoice: {
       label: props.invoice?.label || "",
-      invTotalLabel: props.invoice?.invTotalLabel || "",
       num: props.invoice?.num || "",
       invDate: props.invoice?.invDate || "",
       invGenDate: props.invoice?.invGenDate || "",
@@ -142,8 +138,6 @@ function jsPDFInvoiceTemplate(props) {
       tableBodyBorder: props.invoice?.tableBodyBorder || false,
       header: props.invoice?.header || [],
       table: props.invoice?.table || [],
-      invTotal: props.invoice?.invTotal || "",
-      invCurrency: props.invoice?.invCurrency || "",
       invDescLabel: props.invoice?.invDescLabel || "",
       invDesc: props.invoice?.invDesc || "",
       additionalRows: props.invoice?.additionalRows?.map(x => {
@@ -496,7 +490,7 @@ function jsPDFInvoiceTemplate(props) {
         stampImage = new Image();
         stampImage.src = param.stamp.src;
       }
-
+      
       if (param.stamp.type)
         doc.addImage(
           stampImage,
@@ -531,20 +525,13 @@ function jsPDFInvoiceTemplate(props) {
   doc.setFontSize(pdfConfig.labelTextSize);
   currentHeight += pdfConfig.lineHeight;
 
-  //#region Line breaker before invoce total
-  if (
-    param.invoice.header.length &&
-    (param.invoice.invTotal ||
-      param.invoice.invTotalLabel ||
-      param.invoice.invCurrency)
-  ) {
-    doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
-    currentHeight += pdfConfig.lineHeight;
-  }
-  //#endregion
-
   //#region additionalRows
   if (param.invoice.additionalRows?.length > 0) {
+    //#region Line breaker before invoce total
+    doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
+    currentHeight += pdfConfig.lineHeight;
+    //#endregion
+
     for (let i = 0; i < param.invoice.additionalRows.length; i++) {
       currentHeight += pdfConfig.lineHeight;
       doc.setFontSize(param.invoice.additionalRows[i].style.fontSize);

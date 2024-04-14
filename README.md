@@ -83,7 +83,7 @@ var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages c
 
 var props = {
     outputType: OutputType.Save,
-    onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void;
+    onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void, //Allows for additional configuration prior to writing among others, adds support for different languages and symbols
     returnJsPDFDocObject: true,
     fileName: "Invoice 2021",
     orientationLandscape: false,

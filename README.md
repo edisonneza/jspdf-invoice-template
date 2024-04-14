@@ -83,6 +83,7 @@ var pdfObject = jsPDFInvoiceTemplate.default(props); //returns number of pages c
 
 var props = {
     outputType: OutputType.Save,
+    onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void;
     returnJsPDFDocObject: true,
     fileName: "Invoice 2021",
     orientationLandscape: false,
@@ -243,9 +244,40 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <hr/>
 
 <details>
+
+<summary>What about fonts and special characters?</summary>
+You can use the `onJsPDFDocCreation` property arrow function to hook into configuring the jsPDF functionality as soon as it's initialized.
+
+
+Allowing the support of multiple languages and currencies for your invoice as outlined in [jsPDF documentation](https://rawgit.com/MrRio/jsPDF/master/docs/):
+> Use of Unicode Characters / UTF-8:
+The 14 standard fonts in PDF are limited to the ASCII-codepage. If you want to use UTF-8 you have to integrate a custom font, which provides the needed glyphs. 
+
+<b>Example Usage:</b>
+
+```typescript
+jsPDFInvoiceTemplate({
+  //https://github.com/edisonneza/jspdf-invoice-template/issues/20#issuecomment-1859975854
+  onJsPDFDocCreation: (doc: jsPDF) => {
+      //var font = "...";
+      doc.addFileToVFS('LiberationSans-Regular-normal.ttf', font);
+      doc.addFont('LiberationSans-Regular-normal.ttf', 'LiberationSans-Regular', 'normal');
+      doc.setFont('LiberationSans-Regular');
+      
+  },
+});
+```
+</details>
+
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.4.4</summary>
+
+  * Added Support for modifying fonts by adding direct access to the jsPDF Document Object, this allows the support for additional fonts as well as changing the font for additional languages.
+    - In the event additional functionality is required for certain operation it can be injected as a wrapper function for the underlying jsPDF functionality without needed to modify the base source files.
+</details>
+<details>
 <summary>v.1.4.3</summary>
 
   * Dynamic rows at the end of the table (total, vat, subtotal etc)

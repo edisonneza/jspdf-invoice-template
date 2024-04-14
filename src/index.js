@@ -15,6 +15,7 @@ export { OutputType, jsPDF };
  *
  * @param { {
  *  outputType: OutputType | string,
+ *  onJsPDFDocCreation?: (doc: jsPDF) => void,
  *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
  *  orientationLandscape?: boolean,
@@ -89,6 +90,7 @@ export { OutputType, jsPDF };
 function jsPDFInvoiceTemplate(props) {
   const param = {
     outputType: props.outputType || "save",
+    onJsPDFDocCreation: props.onJsPDFDocCreation || null,
     returnJsPDFDocObject: props.returnJsPDFDocObject || false,
     fileName: props.fileName || "",
     orientationLandscape: props.orientationLandscape || false,
@@ -176,7 +178,8 @@ function jsPDFInvoiceTemplate(props) {
   };
 
   var doc = new jsPDF(options);
-
+  props.onJsPDFDocCreation && props.onJsPDFDocCreation(doc);
+  
   var docWidth = doc.internal.pageSize.width;
   var docHeight = doc.internal.pageSize.height;
 

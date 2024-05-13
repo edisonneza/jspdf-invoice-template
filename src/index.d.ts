@@ -12,6 +12,7 @@ import { jsPDF } from "jspdf";
  *
  * @param { {
  *  outputType: OutputType | string,
+ *  onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void,
  *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
  *  orientationLandscape?: boolean,
@@ -92,6 +93,7 @@ declare function jsPDFInvoiceTemplate(props: {
         Blob: string;
         ArrayBuffer: string;
     } | string;
+    onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void;
     returnJsPDFDocObject?: boolean;
     fileName: string;
     orientationLandscape?: boolean;

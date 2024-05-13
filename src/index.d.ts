@@ -12,7 +12,7 @@ import { jsPDF } from "jspdf";
  *
  * @param { {
  *  outputType: OutputType | string,
- *  onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void,
+ *  onJsPDFDocCreation?: (doc: jsPDF) => void,
  *  returnJsPDFDocObject?: boolean,
  *  fileName: string,
  *  orientationLandscape?: boolean,
@@ -93,7 +93,7 @@ declare function jsPDFInvoiceTemplate(props: {
         Blob: string;
         ArrayBuffer: string;
     } | string;
-    onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void;
+    onJsPDFDocCreation?: (doc: jsPDF) => void;
     returnJsPDFDocObject?: boolean;
     fileName: string;
     orientationLandscape?: boolean;
@@ -151,16 +151,14 @@ declare function jsPDFInvoiceTemplate(props: {
         table?: any;
         invDescLabel?: string;
         invDesc?: string;
-        additionalRows?: [
-            {
-                col1?: string;
-                col2?: string;
-                col3?: string;
-                style?: {
-                    fontSize?: number;
-                };
-            }
-        ];
+        additionalRows?: {
+            col1?: string;
+            col2?: string;
+            col3?: string;
+            style?: {
+                fontSize?: number;
+            };
+        }[];
     };
     footer?: {
         text?: string;
@@ -169,9 +167,5 @@ declare function jsPDFInvoiceTemplate(props: {
     pageLabel?: string;
 }): {
     pagesNumber: number;
-    jsPDFDocObject?: jsPDF;
-    blob?: Blob;
-    dataUriString?: string;
-    arrayBuffer?: ArrayBuffer;
 };
 export { jsPDF };

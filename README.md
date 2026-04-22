@@ -25,7 +25,7 @@ npm i jspdf-invoice-template
 Alternatively, load latest version from a CDN:<br/>
 <i>(Recommended to use a static version (not @latest) to prevent failure when updates are made)</i>
 ```html
-<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
+<script src="https://unpkg.com/jspdf-invoice-template@1.5.0/dist/index.js"></script>
 ```
 </details>
 <hr/>
@@ -141,30 +141,43 @@ var props = {
             "m2",
             400.5
         ])),
-        invTotalLabel: "Total:",
-        invTotal: "145,250.50",
-        invCurrency: "ALL",
-        row1: {
-            col1: 'VAT:',
-            col2: '20',
-            col3: '%',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
-        },
-        row2: {
-            col1: 'SubTotal:',
-            col2: '116,199.90',
-            col3: 'ALL',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
-        },
+        additionalRows: [
+            {
+                col1: 'Total:',
+                col2: '145,250.50',
+                col3: 'ALL',
+                style: { fontSize: 14 }
+            },
+            {
+                col1: 'VAT:',
+                col2: '20',
+                col3: '%',
+                style: { fontSize: 10 }
+            },
+            {
+                col1: 'SubTotal:',
+                col2: '116,199.90',
+                col3: 'ALL',
+                style: { fontSize: 10 }
+            },
+        ],
         invDescLabel: "Invoice Note",
         invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
     },
     footer: {
         text: "The invoice is created on a computer and is valid without the signature and stamp.",
+    },
+    watermark: {
+        text: "PRIVATE",    // text to stamp on the page
+        color: "#b0b0b0",   // optional, default: #b0b0b0
+        rotate: 45,         // optional, degrees — 45 diagonal, 0 horizontal; default: 45
+        opacity: 0.5,       // optional, 0–1, default: 0.5
+        bold: false,        // optional, default: false
+        italic: false,      // optional, default: false
+        fontSize: 60,       // optional, default: 60
+        x: null,            // optional, mm from left — default: page center
+        y: null,            // optional, mm from top  — default: page center
+        inAllPages: true,   // optional, default: false (first page only)
     },
     pageEnable: true,
     pageLabel: "Page ",
@@ -218,10 +231,36 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 <summary>--- Changelog ---</summary>
 
 <details open>
+<summary>v.1.5.0</summary>
+
+  * Added `watermark` parameter — stamp text on any/all pages with configurable rotation, position (x/y), color, opacity, font size, and bold/italic
+</details>
+
+<details>
+<summary>v.1.4.4</summary>
+
+  * Added support for modifying fonts via direct access to the jsPDF Document Object, enabling additional fonts and language support
+</details>
+
+<details>
+<summary>v.1.4.3</summary>
+
+  * Dynamic rows at the end of the table (total, vat, subtotal etc) via `additionalRows`
+  * Added stamp image at the left bottom of the page (image as a qr code)
+</details>
+
+<details>
+<summary>v.1.4.2</summary>
+
+  * Separated Node.js and web-based builds into two packages
+  * Fixed Image and Blob type (for Node.js)
+</details>
+
+<details>
 <summary>v.1.4.0</summary>
 
-  * Added compress option
-  * Added custom column style (width) - (FYI: Width-> portrait: 210; landscape: 297)
+  * Added `compress` option
+  * Added custom column style (width) — portrait: 210mm total; landscape: 297mm total
 </details>
 
 <details>
@@ -229,20 +268,21 @@ pdfCreated.jsPDFDocObject.save(); //or .output('<outputTypeHere>');
 
   * Fixed package entry point
 </details>
+
 <details>
 <summary>v.1.3.1</summary>
 
-  * Added feature to add or remove columns 
+  * Added feature to add or remove columns
   * Dynamic height in all columns
 </details>
 
 <details>
 <summary>v.1.2.0</summary>
 
-  * Added returnJsPDFDocObject prop
-  * Added support for returning different outputs based on output type prop
-  * All parameter object properties are now OPTIONAL
-  * Return jspdf doc object, so now can be added new content or edited the pdf file and output it in all types that jsPDF library supports. 
+  * Added `returnJsPDFDocObject` prop
+  * Added support for returning different outputs based on `outputType` prop
+  * All parameter object properties are now optional
+  * Return jsPDF doc object, so it can be extended with new content and output in any type jsPDF supports
 </details>
 
 </details>
@@ -255,6 +295,65 @@ Landscape:
 
 ![portrait version](https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/landscape_mode.PNG)
 
+<hr/>
+
+# Running the demo locally
+
+<details>
+<summary>How to run the demo on your machine?</summary>
+
+**1. Clone the repository**
+```sh
+git clone https://github.com/edisonneza/jspdf-invoice-template.git
+cd jspdf-invoice-template
+```
+
+**2. Install dependencies**
+```sh
+npm install
+```
+
+**3. Build the dist bundle**
+```sh
+npm run build
+```
+
+**4. Point the demo pages to the local build**
+
+Both `index.html` and `json.html` load the library from a CDN by default. To use your local build, replace the CDN script tag in either file:
+
+```html
+<!-- change this -->
+<script src="https://unpkg.com/jspdf-invoice-template@latest/dist/index.js"></script>
+
+<!-- to this -->
+<script src="./dist/index.js"></script>
+```
+
+**5. Serve the files through a local web server**
+
+The demo requires a server (not `file://`) because jsPDF loads images via `fetch`. Any static server works:
+
+```sh
+# using Node.js
+npx serve .
+
+# using Python
+python -m http.server 8080
+```
+
+Then open `http://localhost:3000` (or whichever port the server reports).
+
+**6. Open a demo page**
+
+| Page | Description |
+|---|---|
+| `index.html` | Visual invoice editor — click any field to edit, use **Advanced Settings** to configure the watermark, then click **Refresh** to preview or **Download PDF** to save |
+| `json.html` | JSON editor — paste or edit the raw props object and click **Generate PDF Invoice** |
+
+</details>
+
+<hr/>
 
 ## 👋
 

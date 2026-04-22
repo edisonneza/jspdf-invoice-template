@@ -36,7 +36,7 @@
             <div class="col-sm">
                 <h3> Javascript PDF Invoice Template - Demo </h3>
                 <p> Edit the object below to generate another PDF document.</p>
-                <p><i>(Object based on v1.4.3)</i></p>
+                <p><i>(Object based on v1.5.0)</i></p>
                 <h6>
                     <!-- <a target="_blank"
                         href="https://edisonneza.github.io/jspdf-invoice-template/documentation/global.html#jsPDFInvoiceTemplate">Take
@@ -163,6 +163,18 @@
                             },
                             footer: {
                                 text: "The invoice is created on a computer and is valid without the signature and stamp.",
+                            },
+                            watermark: {
+                                text: "PRIVATE",
+                                color: "#b0b0b0",
+                                rotate: 45,
+                                opacity: 0.5,
+                                bold: false,
+                                italic: false,
+                                fontSize: 60,
+                                x: null,
+                                y: null,
+                                inAllPages: true,
                             },
                             pageEnable: true,
                             pageLabel: "Page ",

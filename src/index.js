@@ -1,4 +1,4 @@
-import { jsPDF } from "jspdf";
+import { jsPDF, GState } from "jspdf";
 
 const OutputType = {
   Save: "save", //save pdf as a file
@@ -78,6 +78,19 @@ export { OutputType, jsPDF };
  *   footer?: {
  *       text?: string,
  *   },
+ *   watermark?: {
+ *       text?: string,
+ *       color?: string,
+ *       diagonal?: boolean,
+ *       rotate?: number,
+ *       opacity?: number,
+ *       bold?: boolean,
+ *       italic?: boolean,
+ *       fontSize?: number,
+ *       x?: number,
+ *       y?: number,
+ *       inAllPages?: boolean,
+ *   },
  *   pageEnable?: boolean,
  *   pageLabel?: string, } } props
  */
@@ -146,6 +159,19 @@ function jsPDFInvoiceTemplate(props) {
     },
     footer: {
       text: props.footer?.text || "",
+    },
+    watermark: {
+      text: props.watermark?.text || "",
+      color: props.watermark?.color || "#b0b0b0",
+      diagonal: props.watermark?.diagonal !== undefined ? props.watermark.diagonal : true,
+      rotate: props.watermark?.rotate !== undefined ? props.watermark.rotate : null,
+      opacity: props.watermark?.opacity !== undefined ? props.watermark.opacity : 0.5,
+      bold: props.watermark?.bold || false,
+      italic: props.watermark?.italic || false,
+      fontSize: props.watermark?.fontSize || 60,
+      x: props.watermark?.x !== undefined ? props.watermark.x : null,
+      y: props.watermark?.y !== undefined ? props.watermark.y : null,
+      inAllPages: props.watermark?.inAllPages || false,
     },
     pageEnable: props.pageEnable || false,
     pageLabel: props.pageLabel || "Page",
@@ -573,6 +599,47 @@ function jsPDFInvoiceTemplate(props) {
       docWidth - 20,
       doc.internal.pageSize.height - 6
     );
+  }
+  //#endregion
+
+  //#region WATERMARK
+  if (param.watermark.text) {
+    var addWatermark = () => {
+      const totalPages = doc.getNumberOfPages();
+      const pagesCount = param.watermark.inAllPages ? totalPages : 1;
+
+      var fontStyle = "normal";
+      if (param.watermark.bold && param.watermark.italic) fontStyle = "bolditalic";
+      else if (param.watermark.bold) fontStyle = "bold";
+      else if (param.watermark.italic) fontStyle = "italic";
+
+      const angle = param.watermark.rotate !== null
+        ? param.watermark.rotate
+        : param.watermark.diagonal ? 45 : 0;
+      const x = param.watermark.x !== null ? param.watermark.x : (docWidth + 50) / 2;
+      const y = param.watermark.y !== null ? param.watermark.y : (docHeight + 50) / 2;
+
+      for (let i = 1; i <= pagesCount; i++) {
+        doc.setPage(i);
+        doc.saveGraphicsState();
+        doc.setGState(new GState({ opacity: param.watermark.opacity }));
+        doc.setTextColor(param.watermark.color);
+        doc.setFontSize(param.watermark.fontSize);
+        doc.setFont(undefined, fontStyle);
+        doc.text(
+          param.watermark.text,
+          x,
+          y,
+          {
+            align: "center",
+            angle: angle,
+            baseline: "middle",
+          }
+        );
+        doc.restoreGraphicsState();
+      }
+    };
+    addWatermark();
   }
   //#endregion
 

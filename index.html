@@ -357,6 +357,54 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>Watermark Text</h6>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Text:</small>
+                                        <input type="text" class="form-control form-control-sm" id="watermarkText" value="" placeholder="e.g. PRIVATE" style="color: #000;">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <small>Color:</small>
+                                        <input type="color" class="form-control form-control-sm form-control-color" id="watermarkColor" value="#b0b0b0">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <small>Font Size:</small>
+                                        <input type="number" class="form-control form-control-sm" id="watermarkFontSize" value="60" style="color: #000;">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <small>Opacity (0–1):</small>
+                                        <input type="number" step="0.1" min="0" max="1" class="form-control form-control-sm" id="watermarkOpacity" value="0.5" style="color: #000;">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <small>Rotate (°):</small>
+                                        <input type="number" class="form-control form-control-sm" id="watermarkRotate" value="45" style="color: #000;">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <small>X (mm, blank=center):</small>
+                                        <input type="number" class="form-control form-control-sm" id="watermarkX" value="" placeholder="center" style="color: #000;">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <small>Y (mm, blank=center):</small>
+                                        <input type="number" class="form-control form-control-sm" id="watermarkY" value="" placeholder="center" style="color: #000;">
+                                    </div>
+                                    <div class="col-md-2 d-flex flex-column justify-content-end">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="watermarkBold">
+                                            <label class="form-check-label">Bold</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="watermarkItalic">
+                                            <label class="form-check-label">Italic</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="watermarkInAllPages" checked>
+                                            <label class="form-check-label">All Pages</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -407,7 +455,7 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/jspdf-invoice-template@latest/dist/index.js" type="text/javascript"></script>
+    <script src="./dist/index.js" type="text/javascript"></script>
     <script>
         let invoiceRowCount = 0;
         let totalRowCount = 0;
@@ -642,6 +690,18 @@
                 },
                 footer: {
                     text: document.getElementById('footerText').textContent
+                },
+                watermark: {
+                    text: document.getElementById('watermarkText').value,
+                    color: document.getElementById('watermarkColor').value,
+                    rotate: parseFloat(document.getElementById('watermarkRotate').value) || 0,
+                    opacity: parseFloat(document.getElementById('watermarkOpacity').value) || 0.5,
+                    bold: document.getElementById('watermarkBold').checked,
+                    italic: document.getElementById('watermarkItalic').checked,
+                    fontSize: parseInt(document.getElementById('watermarkFontSize').value) || 60,
+                    x: document.getElementById('watermarkX').value !== '' ? parseFloat(document.getElementById('watermarkX').value) : null,
+                    y: document.getElementById('watermarkY').value !== '' ? parseFloat(document.getElementById('watermarkY').value) : null,
+                    inAllPages: document.getElementById('watermarkInAllPages').checked,
                 },
                 pageEnable: document.getElementById('pageEnable').checked,
                 pageLabel: document.getElementById('pageLabel').value

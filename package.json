@@ -1,6 +1,6 @@
 {
   "name": "jspdf-invoice-template",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "PDF template created for invoice with optional parameters. Using jsPDF library.",
   "main": "./dist/index.js",
   "scripts": {
@@ -19,7 +19,17 @@
     "pdf",
     "pdf-template",
     "js-pdf-template",
-    "ts-pdf-template"
+    "ts-pdf-template",
+    "pdf-generator",
+    "pdf-invoice",
+    "pdf-invoice-generator",
+    "pdf-invoice-template",
+    "pdf-invoice-js",
+    "pdf-invoice-ts",
+    "pdf-invoice-javascript",
+    "pdf-generator",
+    "pdf-template-generator",
+    "pdf-invoice-generator"
   ],
   "author": "Edison Neza <edisonneza.dev@gmail.com>",
   "license": "ISC",

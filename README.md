@@ -36,7 +36,7 @@ npm i jspdf-invoice-template-nodejs
 Alternatively, load latest version from a CDN:<br/>
 <i>(Recommended to use a static version (not @latest) to prevent failure when updates are made)</i>
 ```html
-<script src="https://unpkg.com/jspdf-invoice-template@1.5.0/dist/index.js"></script>
+<script src="https://unpkg.com/jspdf-invoice-template@1.5.1/dist/index.js"></script>
 ```
 </details>
 <hr/>
@@ -280,7 +280,7 @@ jsPDFInvoiceTemplate({
 <summary>--- Changelog ---</summary>
 
 <details open>
-<summary>v.1.5.0</summary>
+<summary>v.1.5.1</summary>
 
   * Added `watermark` parameter — stamp text on any/all pages with configurable rotation, position (x/y), color, opacity, font size, and bold/italic
 </details>

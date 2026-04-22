@@ -81,6 +81,19 @@ import { jsPDF } from "jspdf";
  *   footer?: {
  *       text?: string,
  *   },
+ *   watermark?: {
+ *       text?: string,
+ *       color?: string,
+ *       diagonal?: boolean,
+ *       rotate?: number,
+ *       opacity?: number,
+ *       bold?: boolean,
+ *       italic?: boolean,
+ *       fontSize?: number,
+ *       x?: number,
+ *       y?: number,
+ *       inAllPages?: boolean,
+ *   },
  *   pageEnable?: boolean,
  *   pageLabel?: string, } } props
  */
@@ -162,6 +175,19 @@ declare function jsPDFInvoiceTemplate(props: {
     };
     footer?: {
         text?: string;
+    };
+    watermark?: {
+        text?: string;
+        color?: string;
+        diagonal?: boolean;
+        rotate?: number;
+        opacity?: number;
+        bold?: boolean;
+        italic?: boolean;
+        fontSize?: number;
+        x?: number;
+        y?: number;
+        inAllPages?: boolean;
     };
     pageEnable?: boolean;
     pageLabel?: string;
